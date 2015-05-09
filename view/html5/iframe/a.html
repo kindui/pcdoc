@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<button>A</button>
+
+<iframe src="b.html" id="if"></iframe>
+<script>
+
+//    postMessage是html为了解决跨域通信，特别引入的一个新的API，
+//    目前支持这个API的浏览器有：Firefox, IE8+, Opera, Safari, Chrome。postMessage允许页面中的多个iframe/window的通信，
+//    postMessage也可以实现ajax直接跨域，不通过服务器端代理。
+
+
+//postMessage这个函数接收二个参数，缺一不可，第一个参数即你要发送的数据，第二个参数是非常重要，
+//主要是出于安全的考虑，一般填写允许通信的域名，这里明河为了简化，所以使用’*'，即不对访问的域进行判断。
+
+    window.onmessage = function (e) {
+        e = e || event;
+        console.log("a.html rev :", e.data);
+    };
+    window.postMessage("你好吗", "*");
+//    postMessage("你好吗", "http://127.0.0.1");
+    //window.postMessage('nihao', '*');
+
+    //window.postMessage("aaaa","http://127.0.0.1/human/1/iframe/b.html");
+
+    var ifm = document.getElementById("if");
+    ifm.onload = function () {
+        ifm.contentWindow.postMessage("a的内容", "*");
+    }
+
+
+</script>
+</body>
+</html>

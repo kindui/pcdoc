@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+
+
+    var byId = document.getElementById;
+    /*
+     encodeURI
+     以下字符不会编码 ： - _ . ! ~ * ' ()
+     ; / ? : @ & = + $ , #
+     编码规则：
+     将其他字符转换为 UTF-8 并将结果1，2，3个字节编码为一个%xx的十六进制数转义序列
+     asc转义一个%xx
+     \u0080 - \u07ff 转义为%xx%xx
+     其他的转义为 %xx%xx%xx （中文）
+     /*
+
+
+     encodeURI,encodeURIComponent其实是对已编码的Unicode进行再编码
+     escape('中国').replace(/%u/g,'\\u')
+     "\u4E2D\u56FD"
+     encodeURI('\u4E2D\u56FD')
+     "%E4%B8%AD%E5%9B%BD"
+
+
+     //encodeURIComponent
+     // 以下字符不会编码 ： - _ . ! ~ * ' ()
+
+     //escape
+     // 以下字符不会编码 ： @ * _ + - . /
+     // 转码规则 2种： %xx %uxxxx
+     // \u0000 - \u00ff 替换为 %xx
+     // 其他的Unicode字符替换为 %uxxxx
+     // 可使用unescape 来解码 escape编码的字符串
+
+
+
+     //    encodeURI('你好')
+     //    "%E4%BD%A0%E5%A5%BD"
+     //    encodeURIComponent('你好')
+     //    "%E4%BD%A0%E5%A5%BD"
+     //    escape('你好')
+     //    "%u4F60%u597D"
+
+     */
+    function tounicode(data) {
+        if (data == '') return '请输入汉字';
+        var str = '';
+        for (var i = 0; i < data.length; i++) {
+            str += "\\u" + parseInt(data[i].charCodeAt(0), 10).toString(16);
+        }
+        return str;
+    }
+    function tohanzi(data) {
+        if (data == '') return '请输入十六进制unicode';
+        data = data.split("\\u");
+        var str = '';
+        for (var i = 0; i < data.length; i++) {
+            str += String.fromCharCode(parseInt(data[i], 16).toString(10));
+        }
+        return str;
+    }
+
+    var GB2312UnicodeConverter={
+        ToUnicode:function(str){
+            return escape(str).toLocaleLowerCase().replace(/%u/gi,'\\u');
+        }
+        ,ToGB2312:function(str){
+            return unescape(str.replace(/\\u/gi,'%u'));
+        }
+    };
+
+    // 汉字转为Unicode字符码表示
+    function toUnicode(s){
+        return s.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g,function(){
+            return "\\u" + RegExp["$1"].charCodeAt(0).toString(16);
+        });
+    }
+
+    var iframe=document.createElement("iframe");
+    iframe.src="about:blank";
+    iframe.setAttribute("style","display:none;visibility:hidden;");
+    document.body.appendChild(iframe);
+    var d=iframe.contentWindow.document;
+    d.charset=d.characterSet="GBK";
+    function getGBKEscape(s) {
+        d.write("<body><a href='?"+s+"'>X</a></body>");
+        d.close();
+        var url=d.body.firstChild.href;
+        return url.substr(url.lastIndexOf("?")+1);
+    }
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+    // 对 x, y 两个参数为 left|center|right|%|px 时的处理，全部处理为纯数字
+    function posConverter(pinObject) {
+        pinObject.x = xyConverter(pinObject.x, pinObject, "width");
+        pinObject.y = xyConverter(pinObject.y, pinObject, "height");
+    }
+
+    // 处理 x, y 值，都转化为数字
+    function xyConverter(x, pinObject, type) {
+        // 先转成字符串再说！好处理
+        x = x + "";
+        // 处理 px
+        x = x.replace(/px/gi, "");
+        // 处理 alias
+        if (/\D/.test(x)) {
+            x = x.replace(/(?:top|left)/gi, "0%").replace(/center/gi, "50%").replace(/(?:bottom|right)/gi, "100%");
+        }
+        // 将百分比转为像素值
+        if (x.indexOf("%") !== -1) {
+            //支持小数
+            x = x.replace(/(\d+(?:\.\d+)?)%/gi, function (m, d) {
+                return pinObject.size()[type] * (d / 100);
+            });
+        }
+        // 处理类似 100%+20px 的情况
+        if (/[+\-*\/]/.test(x)) {
+            try {
+                // eval 会影响压缩
+                // new Function 方法效率高于 for 循环拆字符串的方法
+                // 参照：http://jsperf.com/eval-newfunction-for
+                x = new Function("return " + x)();
+            } catch (e) {
+                throw new Error("Invalid position value: " + x);
+            }
+        }
+        // 转回为数字
+        return numberize(x);
+    }
+
+
+    /**
+     * x取值可能是
+     * 10px
+     * 100%
+     * 50%
+     * 0
+     * left | right | top | bottom | center
+     * 50% + 10px
+     * left
+     * @param num
+     */
+    function convert(num, el, type) {
+        x = x + "";
+
+        //22px => 22
+        x = x.replace(/\s+/gi, '').replace(/px/gi, "");
+
+        // left | right | top | bottom | center
+        if (/\w/.test(x)) {
+            x = x.replace(/(?:top|left)/gi, "0%").replace(/center/gi, '50%').replace(/(?:bottom:right)/gi, '100%');
+        }
+        //50% + 10 => 400 + 10
+        if (x.indexOf('%') != -1) {
+            x = x.replace(/(\d+)%/gi, function (m, d) {
+                return el.size()[type] * (d / 100);
+            });
+        }
+
+        if (/[+\-*\/]/.test(x)) {
+            try{
+                x = new Function('return ' + x);
+            }catch(e){
+                throw new Error("Invalid position value: " + x);
+            }
+        }
+
+        return x;
+
+    }
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+
+
+</script>
+
+</body>
+</html>

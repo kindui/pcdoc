@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+
+    function instanceOf(L, R) {
+        var O = R.prototype;
+        L = L.__proto__;
+        while (true) {
+            if (L === null)
+                return false;
+            if (L === R)
+                return true;
+            L = L.__proto__;
+        }
+    }
+
+    var a = {};
+    a.__proto__ = [];
+    console.log(a instanceof Array);
+
+    function t(){};
+    t.prototype  = Array.prototypea
+    var x = new t();
+    console.log(x instanceof Array);//弹出true
+
+
+    //无法改变内置类型的prototype指向其他对象或null。 即从另一方面论证了通过调用Object.prototype.toString.call(obj)是行之有效的方法。
+    Array.prototype = {
+        splice:function(){alert(11)}
+    };
+    var arr = [];
+    alert(arr instanceof Array);//弹出true,说明与Array的内置原型对象的引用还是保存着的
+    alert(arr.splice)//弹出function splice(){ [native code]}; 说明上面的改变Array原型指向的代码失效，浏览器静默失败。
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

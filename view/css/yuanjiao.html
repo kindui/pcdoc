@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+    <style>
+        .test {
+            border-bottom: 20px solid green;
+            border-right: 20px solid transparent;
+            -webkit-transform: rotate(-45deg);
+            width: 0px;
+            height: 0px;
+        }
+
+        .test2 {
+            margin-top: 100px;
+            width: 100px;
+            height: 100px;
+            background: red;
+            border-top-left-radius: 200px 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="test">
+</div>
+
+<div class="test2">
+
+</div>
+
+<script type="text/html" id='test1'>
+    .test {
+        border-bottom:20px solid green;
+        border-right:20px solid transparent;
+        -webkit-transform: rotate(-45deg);
+        width: 0px;
+        height: 0px;
+    }
+    .test2{
+        margin-top: 100px;
+        width: 100px;
+        height: 100px;
+        background: red;
+        border-top-left-radius: 200px 100px;
+    }
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

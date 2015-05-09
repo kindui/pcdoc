@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<script type="text/html" id="header_tpl">
+    <header class="demo" id="header">
+        <aside id="demo-toolbar">
+            <nav class="demo-toolbar"><a href="javascript:;">完美版</a> |
+                <a href="javascript://常用文档">文档 ▾</a> |
+                <a href="javascript://常用工具">工具 ▾</a> |
+                <a href="javascript://快速打开其他模块" onmouseover="javascript:$('#demo-toolbar-goto').show();$('#search_box').focus();"
+                   onmouseout="Demo.searchShow(event);">搜索 ▾</a> |
+                <a href="<%=homepage%>" title="返回模块列表">返回列表</a>
+            </nav>
+        </aside>
+        <h1 class="demo" id="header_h1"><%=name%>
+            <small><%=controller%> / <%=desc%></small>
+        </h1>
+    </header>
+</script>
+
+<script type="text/html" id="example_item_tpl">
+    <% var i = 0; %>
+    <article class="demo" id="demo">
+        <% for(key in list) { var value=list[key];%>
+            <section>
+                <nav class="demo demo-toolbar">
+                    <!--<a href="javascript:;">效率</a> | -->
+                    <a href="javascript:Demo.execCode(<%=i%>)" >执行</a></nav>
+                <h4 class="demo" id="demo-example-<%=i%>"><%=key%><small class="small_ret"></small></h4>
+                <pre class="demo demo-sourcecode sh-js sh"><%=value%></pre>
+            </section>
+        <% i++; } %>
+    </article>
+</script>
+
+<script type="text/html" id="search_box_tpl">
+    <div id="demo-toolbar-goto" class="demo-toolbar-dropdown" style="width: 300px; display: none;"
+         onmouseout="javascript:Demo.searchHide(event);" onmouseover="javascript:Demo.searchShow(event);">
+        <input id="search_box" style="width:290px;padding:5px;border:0;border-bottom:1px solid #9B9B9B;" type="text"
+               placeholder="输入模块路径/名称以快速转到">
+
+        <div class="demo-toolbar-dropdown-menu"
+             style="_height: 300px;_width:300px;word-break:break-all;max-height:300px;overflow:auto;">
+
+            <% for(var i = 0; i < list.length; i ++) { var item = list[i]; %>
+            <a href="<%=item.href%>" onmouseover="javascript:Demo.alinkHover(event,this)"><%==item.name%>
+                <small style="color: #999"> - <%==item.desc%></small>
+            </a>
+            <% } %>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="search_box_list_tpl">
+    <% for(var i = 0; i < list.length; i ++) { var item = list[i]; %>
+    <a href="<%=item.href%>" onmouseover="javascript:Demo.alinkHover(event,this)"><%==item.name%>
+        <small style="color: #999"> - <%==item.desc%></small>
+    </a>
+    <% } %>
+</script>
+
+<script type="text/html" id="footer_tpl">
+    <footer>
+        <div> author:humanhuang | QQ:316996367</div>
+    </footer>
+</script>
+
+</body>
+</html>

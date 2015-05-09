@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+
+        ul.paganation{
+            position: relative;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul.paganation a{
+            float: left;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            padding: 0.2em 0.5em;
+        }
+        ul.paganation a{
+
+        }
+
+        ul.paganation a:hover,ul.paganation .selected a {
+            background-color: blue;
+            color: white;
+        }
+        ul.paganation a[rel="prev"],ul.paganation a[rel="next"] {
+            border: none;
+        }
+
+        ul.paganation a[rel="prev"]:before {
+            content: "\00AB";
+            padding-right: 0.5em;
+        }
+        ul.paganation a[rel="next"]:after {
+            content: "\00BB";
+            padding-left: 0.5em;
+        }
+    </style>
+</head>
+<body>
+
+<ul class="paganation">
+    <li><a href="" rel="prev">上一页</a></li>
+    <li><a href="">1</a></li>
+    <li class="selected"><a href="">2</a></li>
+    <li><a href="">3</a></li>
+    <li><a href="">4</a></li>
+    <li><a href="">5</a></li>
+    <li><a href="" rel="next">下一页</a></li>
+</ul>
+</body>
+</html>

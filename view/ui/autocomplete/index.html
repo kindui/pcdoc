@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="autoComplete.js"></script>
+    <link rel="stylesheet" href="autoComplete.css">
+
+    <link rel="stylesheet" href="highlight/prettify.css">
+    <script src="highlight/prettify.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            font-family: Verdana, 'Helvetica Neue', helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        table sup,table em {
+            color: red;
+        }
+
+        table td, table th{
+            padding: 8px;
+            border: 1px solid rgb(221, 221, 221);
+            text-align: left;
+        }
+        table td {
+            font-weight: normal;
+            font-size: 12px;
+        }
+        ::selection {
+            background: #b3d4fc;
+            text-shadow: none;
+        }
+
+        input {
+            width: 350px;
+        }
+
+        h1, h2, h3, h4, h5, h6, html, body, pre, p {
+            margin: 0;
+            padding: 0px;
+        }
+
+        html, body {
+            font-size: 12px;
+            font-family: Verdana;
+        }
+
+        #intro, #demo, #footer, #header {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        hr {
+            clear: both;
+            display: block;
+            margin: 5px 0 10px 0;
+        }
+
+        #header {
+            padding-top: 20px;
+        }
+
+        #header #index {
+            font-weight: normal;
+            color: #333;
+        }
+
+        #header a {
+            font-family: "Hiragino Sans GB", 'Microsoft YaHei', "WenQuanYi Micro Hei";
+            margin: 0 10px;
+            color: #b00;
+            font-size: 14px;
+            line-height: 1;
+            text-decoration: none;
+        }
+
+        #intro li em{
+            color: red;
+        }
+
+        #intro ul.left {
+            float: left;
+        }
+
+        #intro ul.right {
+            float: right;
+        }
+
+        #intro ul li {
+            margin-top: 6px;
+            list-style-type: circle;
+        }
+
+        #demo {
+
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-weight: normal;
+            font-size: 20px;
+            font-family: 'Segoe UI Light', 'Segoe UI', "Hiragino Sans GB", 'Microsoft JhengHei UI', "Microsoft YaHei";
+        }
+
+        #demo .block {
+            width: 350px;
+            float: left;
+        }
+
+        #demo .block .inputbox {
+            position: relative;
+        }
+
+        #demo .float-right {
+            float: right;
+        }
+
+        #demo .block h2 {
+            font-weight: normal;
+            font-size: 12px;
+            background: #f4f4f4;
+
+        }
+        #footer {
+            clear: both;
+        }
+        #ds-thread {
+            width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <h1>
+        <a id="index">ng<sup>autoComplete</sup></a>
+        <a href="#operator">操作示例</a>
+        <a href="#footer">参数列表</a>
+    </h1>
+    <hr>
+</div>
+
+<div id="intro">
+    <div>
+        市面上这么多自动补全插件，那我为什么要用ng autocomplete？
+    </div>
+    <ul class="left">
+        <li>功能全面，细节处理好，<em>无bug。</em></li>
+        <li>按键支持，ESC，Enter, TAB</li>
+        <li>支持大数据列表，可滚动列表</li>
+
+        <li>键盘按上下按键的时右侧滚动条自动滚动</li>
+
+        <li>可设置按键触发列表延迟时间</li>
+
+
+        <li>支持选中时onSelect回调函数</li>
+
+
+        <li>可设置获得文本框焦点自动打开</li>
+        <li>可设置是否区分大小写</li>
+        <li>可设置输入框占位文字</li>
+    </ul>
+    <ul class="right">
+
+
+
+        <li>形状上：可设置下拉列表的高度，宽度，以及显示多少项数</li>
+        <!--<li>可设置下拉列表的宽度</li>-->
+        <!--<li>可设置下拉列表的显示项数</li>-->
+
+        <li>样式上：表格各行变色，hover变色，显示正在加载中图标提醒</li>
+        <!--<li>正在加载中图标提醒</li>-->
+        <li>细节上：鼠标移动到列表上显示完全名称，防止名称太长显示不完全</li>
+        <li>细节上：下拉列表项不能被鼠标拉黑</li>
+        <!--<li>鼠标移动到列表变色</li>-->
+        <li>支持ajax远程操作</li>
+        <li>可设置ajax接口查询参数名称修改</li>
+        <li>可设置ajax请求方法</li>
+        <li>可指定ajax返回对象自定义指定字段为数据</li>
+
+    </ul>
+    <hr>
+</div>
+
+<div id="demo">
+    <h1 id="operator">操作示例</h1>
+    <p style="margin-bottom: 10px">var data = ['111','222',...,'999']  测试数据总数：2000</p>
+    <div class="block">
+        <h2>例 1：本地数据基本使用;placehold占位符</h2>
+
+        <div class="inputbox"><input id="t1" type="text"></div>
+        <div><pre class="prettyprint">
+new autoComplete({
+    el: '#t1',
+    data: data,
+    placeholder:'试一下↑↓，Tab键，Enter键吧！'
+});
+        </pre>
+        </div>
+    </div>
+
+    <div class="block float-right">
+        <h2>例 2：获得焦点自动打开;选择后回调</h2>
+
+        <div class="inputbox"><input id="t2" type="text"></div>
+        <div><pre class="prettyprint">
+new autoComplete({
+    el: '#t2',
+    data: data,
+    autoOpen:true,
+    placeholder:'点击我自动打开',
+    onSelect: function (value) {
+        alert('您选择的是：'+value);
+    }
+});
+        </pre>
+        </div>
+        <!--<p>这里是说明啊</p>-->
+    </div>
+
+    <div class="block">
+        <h2>例 3：按键延迟，2秒后打开列表框</h2>
+
+        <div class="inputbox"><input id="t3" type="text"></div>
+        <div><pre class="prettyprint">
+new autoComplete({
+    el: '#t3',
+    data: data,
+    placeholder:'延迟2秒后打开',
+    keyupDelay:2000
+});
+        </pre>
+        </div>
+    </div>
+
+    <div class="block float-right">
+        <h2>例 4：默认下拉项数：5个；并且设置列表宽度为200px</h2>
+
+        <div class="inputbox"><input id="t4" type="text"></div>
+        <div><pre class="prettyprint">
+new autoComplete({
+    el: '#t4',
+    data: data,
+    placeholder:'下拉项数：5个',
+    max:5,
+    width:200
+});
+        </pre>
+        </div>
+    </div>
+
+    <div class="block">
+        <h2>例 5：不区分大小写,如输入AA；延迟关闭2秒</h2>
+
+        <div class="inputbox"><input id="t5" type="text"></div>
+        <div><pre class="prettyprint">
+new autoComplete({
+    el: '#t5',
+    data: data,
+    placeholder:'不区分大小写,延迟关闭2秒',
+    closeDelay:2000,
+    matchCase:false
+});
+        </pre>
+        </div>
+    </div>
+
+    <div class="block float-right">
+        <h2>例 6：指定data对象的数组字段为数据</h2>
+
+        <div class="inputbox"><input id="t6" type="text"></div>
+        <div><pre class="prettyprint">
+var dataobj = {ddd:data};
+new autoComplete({
+    el: '#t6',
+    data: dataobj,
+    placeholder:'指定data对象的数组字段data.ddd',
+    root:'ddd'
+});
+        </pre>
+        </div>
+    </div>
+
+    <div class="block">
+        <h2>例 7：ajax; url为cgi接口； paramName为查询参数名； root为指定data对象的数组字段为数据</h2>
+
+        <div class="inputbox"><input id="t7" type="text"></div>
+        <div><pre class="prettyprint">
+new autoComplete({
+    el: '#t7',
+    url:'test.php',
+    placeholder:'ajax测试,请求参数名设置',
+    paramName:'word',
+    root:'data'
+});
+        </pre>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+    <h1>参数说明</h1>
+<table>
+    <thead>
+    <tr>
+        <th>名称</th>
+        <th>可选值</th>
+        <th>描述</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>el<sup>  require</sup></td>
+        <td>jquery Selector</td>
+        <td>要自动提示的inputbox Element对象</td>
+    </tr>
+    <tr>
+        <td>data</td>
+        <td>[]</td>
+        <td>数据使用本地对象数组</td>
+    </tr>
+    <tr>
+        <td>placeholder</td>
+        <td>string</td>
+        <td>输入框默认提示文字</td>
+    </tr>
+    <tr>
+        <td>autoOpen</td>
+        <td>{<em>false</em> | true}</td>
+        <td>输入框获得焦点自动打开</td>
+    </tr>
+    <tr>
+        <td>onSelect</td>
+        <td>function(value){}</td>
+        <td>选中的时候回调函数，;value为选择的项</td>
+    </tr>
+    <tr>
+        <td colspan="3"><em>ajax</em></td>
+    </tr>
+    <tr>
+        <td>url</td>
+        <td>string</td>
+        <td>ajax远程cgi地址</td>
+    </tr>
+    <tr>
+        <td>paramName</td>
+        <td>'<em>q</em>' : string</td>
+        <td>ajax远程请求的参数名称</td>
+    </tr>
+    <tr>
+        <td>method</td>
+        <td>{<em>GET</em> | POST} string</td>
+        <td>ajax请求方法</td>
+    </tr>
+    <tr>
+        <td>root</td>
+        <td>string</td>
+        <td>指定data对象的数组字段为数据</td>
+    </tr>
+    <tr>
+        <td colspan="3"><em>附加</em></td>
+    </tr>
+    <tr>
+        <td>listHeight</td>
+        <td><em>180</em> : int</td>
+        <td>下拉框高度(px)</td>
+    </tr>
+    <tr>
+        <td>max</td>
+        <td>int</td>
+        <td>下拉框显示的项目个数</td>
+    </tr>
+    <tr>
+        <td>width</td>
+        <td>int</td>
+        <td>下拉框的宽度(px)</td>
+    </tr>
+    <tr>
+        <td>matchCase</td>
+        <td>{<em>true</em> | false}</td>
+        <td>是否区分大小写</td>
+    </tr>
+    <tr>
+        <td>keyupDelay</td>
+        <td><em>200</em> : int</td>
+        <td>按键触发时间(ms)</td>
+    </tr>
+    <tr>
+        <td>closeDelay</td>
+        <td><em>300</em> : int</td>
+        <td>延时关闭时间(ms)</td>
+    </tr>
+    </tbody>
+</table>
+
+</div>
+<script>
+    var data = (function () {
+        var a = [];
+        var i = 2000;
+        while (i--) {
+            a.push(Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2));
+        }
+        return a;
+    })();
+    var data2 = {data: data};
+    var data3 = [
+        '苹果', '香蕉', '李子'
+    ];
+
+    $('pre').each(function () {
+        eval(this.innerHTML);
+    });
+
+
+    window.prettyPrint();
+</script>
+<!-- Duoshuo Comment BEGIN -->
+<div class="ds-thread"></div>
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:"humanhuang"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- Duoshuo Comment END -->
+</body>
+</html>

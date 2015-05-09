@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+
+<div id="obj" style="width:100px;height: 100px;border: 1px solid black">
+</div>
+<div id="test" style="width:100px;height: 100px;border: 1px solid red">
+</div>
+<button id="btn" onclick="alert('me clicked');">click me</button>
+
+<script type="text/html" id='test1'>
+    $("#obj").click(function () {
+        console.log("me clickd1");
+    });
+    $("#obj").click(function () {
+        console.log("me clic22222");
+    });
+    $("#obj").click(function () {
+        console.log("me clic22222");
+    });
+
+
+    //派发鼠标点击事件
+    var btn = document.getElementById("btn");
+    var e = document.createEvent("MouseEvents");
+    e.initEvent("click", true, true, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    btn.dispatchEvent(e);
+
+
+    //  for IE
+
+    //document上绑定自定义事件ondataavailable
+    document.attachEvent('ondataavailable', function (event) {
+        alert(event.eventType);
+    });
+    var obj = document.getElementById("obj");
+    //obj元素上绑定click事件
+    obj.attachEvent('onclick', function (event) {
+        alert(event.eventType);
+    });
+    //调用document对象的createEventObject方法得到一个event的对象实例。
+    var event = document.createEventObject();
+    event.eventType = 'message';
+    //触发document上绑定的自定义事件ondataavailable
+    document.fireEvent('ondataavailable', event);
+    //触发obj元素上绑定click事件
+    document.getElementById("test").onclick = function () {
+        obj.fireEvent('onclick', event);
+    };
+
+
+
+
+
+    //document上绑定自定义事件ondataavailable
+    document.addEventListener('ondataavailable', function (event) {
+        alert(event.eventType);
+    }, false);
+
+    var obj = document.getElementById("obj");
+
+    //obj元素上绑定click事件
+    obj.addEventListener('click', function (event) {
+        alert(event.type);
+    }, false);
+
+
+    //调用document对象的 createEvent 方法得到一个event的对象实例。
+    var event = document.createEvent('HTMLEvents');
+
+    //  UIEvents; MouseEvents; MutationEvents; HTMLEvents
+
+
+    // initEvent接受3个参数：
+    // 事件类型，是否冒泡，是否阻止浏览器的默认行为
+    event.initEvent("ondataavailable", true, true);
+    event.eventType = 'message';
+    //触发document上绑定的自定义事件ondataavailable
+
+    document.dispatchEvent(event);
+
+    var event1 = document.createEvent('HTMLEvents');
+    event1.initEvent("click", true, true);
+    event1.eventType = 'message';
+    //触发obj元素上绑定click事件
+    document.getElementById("test").onclick = function () {
+        obj.dispatchEvent(event1);
+    };
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+    var fired = 0;
+    var start = new Date();
+    var timer = setInterval(function(){
+        if(new Date() - start > 1000){
+            clearInterval(timer);
+            console.log(fired);
+        }
+        fired ++;
+    },0);
+    // console.log 大概是250 , 1000 / 250 = 4ms 就是说大概4ms 触发一次timmer
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

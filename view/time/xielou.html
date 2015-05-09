@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<p id="test">ppp</p>
+<script>
+
+    function createLargeClosure() {
+        var largeStr = new Array(1000000).join('x');
+
+        var lC = function () { // this is NOT a named function
+            return largeStr;
+        };
+
+        return lC;
+    }
+
+//    createLargeClosure();
+    //    function test() {
+    //        var ttt = document.getElementById('test');
+    //        ttt.onclick = function () {
+    //            console.log('test clicked');
+    //        }
+    //    }
+
+    //    test();
+</script>
+</body>
+</html>

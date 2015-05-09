@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<script>
+    window.requestAnimFrame = (function(){
+        return  window.requestAnimationFrame       ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame    ||
+                function( callback ){
+                    window.setTimeout(callback, 1000 / 60);
+                };
+    })();
+
+
+    function test(time){
+        if(parseInt(time) % 6 == 0 ){
+            console.log(time);
+        }
+        requestAnimFrame(test);
+    }
+
+
+
+    requestAnimFrame(test);
+</script>
+</body>
+</html>

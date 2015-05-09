@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<link href="http://t1bao.ap01.aws.af.cm/assets/css/app1.0.css" rel="stylesheet" />
+<title></title>
+</head>
+<body>
+  <div class="box">
+    <header class="title_bar"></header>
+    <div class="wrapper"></div>
+    <footer class="nav_bar">
+      <ul>
+      </ul>
+    </footer>
+  </div>
+  <script type="text/x-handlebars" data-template-name="title">
+      <h1>{{name}}</h1>
+	</script>
+  <script type="text/x-handlebars" data-template-name="wrapper">
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="nav-bar">
+        <li><a data-id="0" id="nav-bar-0" {{action 'home' on="click"}}><span>首页</span> </a></li>
+        <li><a data-id="1" id="nav-bar-1" {{action 'cart' on="click"}}><span>购物车</span> </a></li>
+        <li><a data-id="2" id="nav-bar-2" {{action 'my' on="click"}}><span>我的天易</span> </a></li>
+        <li><a data-id="3" id="nav-bar-3" {{action 'more' on="click"}}><span>更多</span> </a></li>
+  </script>
+
+  <script type="text/x-handlebars">
+  <div class="box">
+    <header class="title_bar"></header>
+    <div class="wrapper"></div>
+    <footer class="nav_bar">
+      <ul>
+      </ul>
+    </footer>
+  </div>
+  </script>
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/jquery_1.8.3.js"></script>
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/jquery.storage.js"></script>
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/app/swiper_1.8.min.js"></script>
+  <!-- 
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/handlebars.js"></script>
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/ember.min.js"></script>
+   -->
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/jquery.cookie.js"></script>
+  <script src="http://t1bao.ap01.aws.af.cm/assets/js/app.js"></script>
+  </body>
+</html>

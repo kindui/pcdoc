@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+    module.exports = function(grunt) {
+        grunt.initConfig({
+            // pkg: grunt.file.readJSON("package.json"),
+            uglify: {
+                /* task1: {
+                 files: {
+                 'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/dist/jquery-1.10.2.js.fuck': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/jquery-1.10.2.js']
+                 }
+                 },*/
+
+                libs: {
+                    files: {
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/dist/jquery-1.10.2.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/jquery-1.10.2.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/dist/jquery.animate-enhanced.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/jquery.animate-enhanced.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/dist/jquery.mobile.custom.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/jquery.mobile.custom.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/dist/iscroll-lite.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/iscroll-lite.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/dist/jquery.mobile.iscrollview.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/jquery.mobile.iscrollview.js']
+                    },
+
+                },
+                apps: {
+                    files: {
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/check.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/check.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/dispatch.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/dispatch.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/login.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/login.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/overview.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/overview.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/pick.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/pick.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/sendtask.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/sendtask.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/totalpick.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/totalpick.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/userrank.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/userrank.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/dist/index.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/index.js'],
+                    },
+
+                },
+                app_common: {
+                    files: {
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/dist/loadjs.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/src/loadjs.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/dist/oppms_mobile.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/src/oppms_mobile.js'],
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/dist/router.min.js': ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/src/router.js']
+                    },
+
+                }
+
+            },
+            watch: {
+                scripts: {
+                    files: ['E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/src/*.js',
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/app/common/src/*.js',
+                        'E:/svns/new/dev/webapp/data_icson_com/biz/oppmsmobile/web/js/lib/src/*.js',
+                    ],
+                    tasks: ['default'],
+                    options: {
+                        spawn: false
+                    }
+                }
+            }
+
+        });
+
+        // Load grunt tasks from NPM packages
+        grunt.loadNpmTasks("grunt-contrib-uglify");
+        grunt.loadNpmTasks("grunt-contrib-watch");
+        grunt.registerTask("default",[ "uglify","watch"]);
+
+    };
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "oppms_mobile": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

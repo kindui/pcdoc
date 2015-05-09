@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="d1"></div>
+<div id="text"></div>
+<button id="start">start fx</button>
+<button id="sequeue">sequeue fx</button>
+<button id="animate">animate fx</button>
+<button id="huan">huan fx</button>
+<button id="tfx">Toggle fx</button>
+
+<script>
+
+    $('#d1').bind({
+        mouseover:function(){
+            $(this).stop().delay(200).fadeTo(300,1.0);
+        },
+        mouseout:function(){
+//            $(this).stop().fadeTo(300,0.5);
+            $(this).stop(true).fadeTo(300,0.5).delay(200).slideUp();
+        }
+    });
+
+//    $.easing
+    var startFx = function () {
+        $('#d1').fadeOut('fast', function () {
+            $('#text').text('complete');
+        });
+    }
+
+    var toggleFx = function () {
+        $.fx.off = !$.fx.off;
+    };
+    $('button').click(function () {
+        if (this.id == 'tfx') {
+            toggleFx();
+        } else if (this.id == 'start') {
+            startFx();
+        } else if (this.id == 'sequeue') {
+            $('#d1').fadeOut().fadeIn().fadeOut().fadeIn().fadeOut().fadeIn();
+        } else if (this.id == 'animate') {
+            $('#d1').animate({
+                width: '+=100'
+            }).animate({
+                        width: 100
+                    });
+        }else if (this.id == 'huan') {
+            $('#d1').animate({
+                width:'+=1000'
+            },500,'swing');
+        }
+    });
+
+    jQuery.fx.speeds['m-fast'] = 300;
+    jQuery.fx.speeds['m-slow'] = 500;
+</script>
+</body>
+</html>

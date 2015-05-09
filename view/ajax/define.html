@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+;(function(global){
+    var mapping = {}, cached = {};
+    global.define = function(id, func){
+        mapping[id] = func;
+    };
+    global.require = function(id){
+        if(cached[id])
+            return cached[id];
+        else
+            return cached[id] = mapping[id]({});
+    };
+})(this);
+
+define('src/utils.js', function(exports) {
+    var verson = '1.00';
+    exports.getVersion = function() {
+        return verson;
+    }
+    return exports;
+});
+
+define('src/main.js', function(exports) {
+    var utils = require('src/utils.js');
+    var version = utils.getVersion();//'1.00'
+    return exports;
+})
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

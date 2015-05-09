@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>snake</title>
+    <style>
+        *{margin: 0;padding:0;}
+        body{text-align: center;}
+        .block ul{
+            margin: 0 auto;
+            border: 5px solid #f1f1f1;
+        }
+        .block li{
+            width:30px;
+            height: 30px;
+            list-style-type: none;
+            float: left;
+            background: transparent;
+            display: block;
+        }
+
+        .block .snake{
+            background-color: #f00;
+        }
+        .block .food{
+            background-color: #f60;
+        }
+        .score{
+            font-size: 18px;
+            color: #f00;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="snakeWrap" class="block"></div>
+<script>
+(function(win, undefined){
+    /**
+     * 基础方法
+     * @type {Object}
+     */
+    var baseMeth = {
+        $: function(o){
+            return document.getElementById(o);
+        },
+        tag: function(str, target){
+            target = target || document;
+            return target.getElementsByTagName(str);
+        }
+    }
+    /**
+     * 默认参数
+     * @type {Object}
+     */
+    var defineCofig = {
+        col : 10, //排数
+        row : 20, //列数
+        oneWidth : 30, //单个像素点宽度
+//        speed : 200, //初始化速度
+        speed : 50, //初始化速度
+        classSnake: 'snake',
+        classFood: 'food',
+        ground : baseMeth.$('snakeWrap')
+    }
+    /**
+     * Snake Class
+     */
+    var Snake = function(o){
+        this.col = o.col;
+        this.row = o.row;
+        this.oneWidth = o.oneWidth;
+        this.speed = o.speed;
+        this.classSnake = o.classSnake;
+        this.classFood = o.classFood;
+        this.ground = o.ground;
+        this.aLi = [];
+        this.snake = [];
+        this.snakeLen = 1;
+        this.food = [];
+        this.directkey;
+        this.direction = [0,1];
+        this.preDirection = [0,1];
+        this.snakeTimer;
+        this.init();
+    }
+    Snake.prototype = {
+        init: function(){
+            this.ceateMap();
+            this.createSnake();
+            this.createFood();
+            this.bindEvenet();
+            this.run();
+        },
+        /**
+         * 生成地图
+         */
+        ceateMap: function(){
+            var grd = this.ground,
+                    map;
+            // 地图
+            map = document.createElement('ul');
+            for(var i=0;i<this.col;i++){
+                this.aLi[i] = [];
+                for(var j=0;j<this.row;j++){
+                    var li = document.createElement("li");
+                    this.aLi[i][j] = li;
+                    map.appendChild(li);
+                }
+            }
+            map.style.width = this.oneWidth * this.row +'px';
+            map.style.height = this.oneWidth * this.col +'px';
+            grd.appendChild(map);
+        },
+        /**
+         * 生成贪吃蛇
+         */
+        createSnake: function(){
+            var x = Math.floor(Math.random()*this.col);
+            var y = Math.floor(Math.random()*this.row);
+            // console.log(x + ":" + y);
+            this.snake = [[x,y]];
+            // snake的长度
+            this.snakeLen = this.snake.length;
+
+            for(var i = this.snakeLen - 1;i>-1;i--){
+                var x = this.snake[i][0];
+                var y = this.snake[i][1];
+                this.aLi[x][y].className = this.classSnake;
+            }
+        },
+        /**
+         * 生成食物
+         */
+        createFood: function(){
+            var x = Math.floor(Math.random()*this.col);
+            var y = Math.floor(Math.random()*this.row);
+
+            var al = this.aLi[x][y];
+            // 食物不能生成到原有的位置和蛇所在的位置
+            if (al.className !== this.classSnake && al.className !== this.classFood) {
+                this.aLi[x][y].className = this.classFood;
+            }else{
+                this.createFood();
+            }
+        },
+        /**
+         * 运动
+         */
+        run: function(){
+            var self = this;
+            if(self.snakeTimer) {
+                window.clearInterval(self.snakeTimer)
+            };
+            self.snakeTimer = window.setInterval(
+                    function (){
+                        self.moveSnake();
+                    },
+                    self.speed
+            );
+        },
+        /**
+         * 贪吃蛇移动
+         */
+        moveSnake: function(){
+            var self = this;
+            self.direction = self.preDirection;
+            var nextX = self.snake[0][0] + self.direction[0];
+            var nextY = self.snake[0][1] + self.direction[1];
+
+            if(nextX > self.col-1 || nextY > self.row-1
+                    || nextX < 0 || nextY < 0 ||
+                    self.aLi[nextX][nextY].className === self.classSnake){
+                self.snakeTimer = true;
+                return ;
+            }
+
+            self.snake.unshift([nextX,nextY])
+
+            if(self.aLi[nextX][nextY].className==self.classFood){
+                self.createFood();
+            }else{
+                self.aLi[self.snake[self.snakeLen][0]][self.snake[self.snakeLen][1]].className='';
+                self.snake.pop();
+            }
+
+            self.aLi[nextX][nextY].className=self.classSnake;
+            self.snakeLen = self.snake.length;
+            self.changeSpeed(self.snakeLen);
+
+            self.snakeTimer = window.setTimeout(function(){
+                self.moveSnake
+            },self.speed);
+        },
+        /**
+         * 更新速度
+         * @param  {[Number]} n
+         */
+        changeSpeed: function(n){
+            this.speed = this.speed - parseInt(n/10)*25;
+        },
+        /**
+         * 更新位置
+         * @param  {[Number]} keycode
+         */
+        changePreDirection: function(keycode){
+            var self = this;
+            switch(keycode){
+                case 37:
+                    self.preDirection = (self.direction[0] == 0 && self.direction[1] == 1 && self.snakeLen !=1)?[0,1]:[0,-1];
+                    break;
+                case 38:
+                    self.preDirection = (self.direction[0] == 1 && self.direction[1] == 0&& self.snakeLen !=1)?[1,0]:[-1,0];
+                    break;
+                    break;
+                case 39:
+                    self.preDirection = (self.direction[0] == 0 && self.direction[1] == -1&& self.snakeLen !=1)?[0,-1]:[0,1];
+                    break;
+                case 40:
+                    self.preDirection = (self.direction[0] == -1 && self.direction[1] == 0&& self.snakeLen !=1)?[-1,0]:[1,0];
+                    break;
+                default:
+                    break;
+            }
+        },
+        /**
+         * 绑定事件
+         */
+        bindEvenet: function(){
+            var self = this;
+            document.onkeydown = function(e){
+                e = e || event;
+                var keycode = e.keyCode || e.which || e.charCode;
+                if(keycode ==37 ||keycode ==38||keycode ==39||keycode ==40 ){
+                    self.changePreDirection(keycode);
+                }
+            }
+
+        }
+    }
+    // 释放接口
+    win.r = function(o){
+        o = o || defineCofig;
+        new Snake(o);
+    }
+}(this));
+r();
+</script>
+</body>
+</html>

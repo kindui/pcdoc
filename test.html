@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+
+<input type="text" id="t">
+<input type="text">
+<script>
+
+$('#t').keydown(function(e){
+    if(e.which == 9){
+        console.log('9');
+//        e.stopImmediatePropagation();
+        e.preventDefault();
+        return false;
+    }
+});
+//$.getScript('data.js',function(ret){
+//   console.log(ret);
+//});
+
+</script>
+</body>
+</html>

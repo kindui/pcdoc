@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<div style="position: fixed;left:0;top: 0">
+    <a onclick="openIt();" href="javascript:;">open it</a>
+    nihao ma
+    <input type="text" id="inputbox"/>
+</div>
+
+<script type="text/html" id='test1'>
+
+    function $(msg) {
+        console.log(msg);
+    }
+    var doc = document;
+    $(doc.cookie);
+    $(doc.lastModified);
+    $(doc.referrer);
+    $(doc.title);
+    $(doc.URL);
+
+    function ElementStream(el) {
+        this.el = el;
+        this.buffer = '';
+    }
+
+    //模仿document.write
+    ElementStream.prototype.write = function () {
+        this.buffer += Array.prototype.join.call(arguments, '');
+    }
+    ElementStream.prototype.writeln = function () {
+        this.buffer += Array.prototype.join.call(arguments, '') + '\n';
+    }
+    ElementStream.prototype.close = function () {
+        this.el.innerHTML = this.buffer;
+        this.buffer = '';
+    }
+
+
+    /**
+     * 获得选中文本
+     * @returns {*}
+     */
+    function getSeletedText() {
+        if (window.getSelection) {
+            return window.getSelection().toString(); //HTML5
+        } else if (window.selection) {
+            return window.selection.createRange().text; // IE
+        }
+
+    }
+
+    function openIt() {
+        var q = getSeletedText();
+        window.open('http://www.baidu.com/s?wd=' + q);
+    }
+
+
+    /**
+     * 输入框的Selection
+     */
+    function inputSelection(){
+        var val = inputbox.value;
+        val = val.substring(inputbox.selectionStart,inputbox.selectionEnd);
+        console.log(val);
+    }
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "document": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

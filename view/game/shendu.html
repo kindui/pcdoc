@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            width: 40px;
+            height: 40px;
+            /*background: red;*/
+            border: 1px solid red;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            list-style: none;
+            float: left;
+        }
+
+        ul {
+            width: 200px;
+            height: 200px;
+            border: dashed 1px black;
+        }
+
+        .cur {
+            background: blue;
+        }
+
+        .block {
+            background: black;
+        }
+
+        .tracker {
+            background: yellow;
+        }
+
+        .space {
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<h2>小弟智能穿越迷宫</h2>
+<div>
+    <label>输入行数</label><input type="text" id="row" value="8"/><label>输入列数</label><input type="text" id="col" value="8"/>
+    <label>多少毫秒移动一次</label><input type="text" id="speed" value="500"/>
+    <button onclick="init()">执行</button>
+</div>
+<ul id="maze">
+</ul>
+
+<script>
+//            0, 1, 0, 0, 0,
+//            0, 1, 0, 1, 0,
+//            0, 0, 0, 0, 0,
+//            0, 1, 1, 1, 0,
+//            0, 0, 0, 1, 0,
+var MAX = {
+    row: 5,
+    col: 5
+}
+
+
+var TAG = {
+    cur: "小弟", //当前头
+    block: "障",  //障碍物
+    space: "",  //非障碍物
+    tracker: "@"  //轨迹
+}
+
+/**
+ * 初始化棋盘和障碍物
+ * @type {Array}
+ */
+function initMaze() {
+     maze = [];
+    for (var i = 0; i < MAX.row; i++) {
+        var rows = [];
+        for (var j = 0; j < MAX.col; j++) {
+
+            var block = Math.random().toString(10).substring(2, 4) % 7;
+            if (block >= 5) {
+                block = TAG.block;  //障碍物
+            } else {
+                block = TAG.space;
+            }
+            rows.push(block);
+        }
+        maze.push(rows);
+    }
+    maze[MAX.row - 1][MAX.col - 1] = "0";
+}
+
+
+/**
+ * 记录上一个位置 { row, col}
+ * @type {Array}
+ */
+function initNextStep() {
+     nextStep = [];
+    for (var i = 0; i < MAX.row; i++) {
+        var rows = [];
+        for (var j = 0; j < MAX.col; j++) {
+            rows.push({row: i, col: j});
+        }
+        nextStep.push(rows);
+    }
+}
+
+function printMaze() {
+    box.innerHTML = "";
+    maze.forEach(function (item, index) {
+        item.forEach(function (liItem) {
+            var li = document.createElement("li");
+            li.innerHTML = liItem;
+            if (liItem == TAG.cur) {
+                li.className = "cur";
+            } else if (liItem == TAG.block) {
+                li.className = "block";
+            } else if (liItem == TAG.space) {
+                li.className = "space";
+            } else if (liItem == TAG.tracker) {
+                li.className = "tracker";
+            }
+            box.appendChild(li)
+        });
+    });
+}
+
+
+/**
+ * 打印成功轨迹
+ */
+function printStep() {
+    var curPos = nextStep[0][0];
+    var row = curPos.row;
+    var col = curPos.col;
+    var trace = [];
+    trace.push([0,0]);
+//    var html = "[0,0]";
+//        html += ",[" + row + "," + col + "]";
+    while (!(row == MAX.row - 1 && col == MAX.col - 1)) {
+        var curPos = nextStep[row][col];
+        var row = curPos.row;
+        var col = curPos.col;
+        maze[row][col] = TAG.cur;
+        trace.push("["+row+"," +col+"]");
+//            html += ",[" + row + "," + col + "]";
+    }
+        console.log(trace);
+}
+
+/**
+ * 访问下一个节点
+ * @param row
+ * @param col
+ * @param curPos
+ */
+function visit(row, col, curPos) {
+    stack.push({
+        row: row,
+        col: col
+    });
+    stack_index = stack.length - 1;
+    maze[curPos.row][curPos.col] = TAG.tracker;
+    maze[row][col] = TAG.cur;
+    nextStep[curPos.row][curPos.col] = {
+        row: row,
+        col: col
+    }
+    printMaze();
+}
+var run = {
+    left: function (currentPos) {
+        var curRow = currentPos.row;
+        var curCol = currentPos.col;
+        if (curCol > 0 && maze[curRow][curCol - 1] == 0) {
+            visit(curRow, curCol - 1, currentPos);
+            return true;
+        }
+        return false;
+    },
+    right: function (currentPos) {
+        var curRow = currentPos.row;
+        var curCol = currentPos.col;
+        if (curCol < MAX.col - 1 && maze[curRow][curCol + 1] == 0) {
+            visit(curRow, curCol + 1, currentPos);
+            return true;
+        }
+        return false;
+    },
+    down: function (currentPos) {
+        var curRow = currentPos.row;
+        var curCol = currentPos.col;
+        if (curRow < MAX.row - 1 && maze[curRow + 1][curCol] == 0) {
+            visit(curRow + 1, curCol, currentPos);
+            return true;
+        }
+        return false;
+    },
+    up: function (currentPos) {
+        var curRow = currentPos.row;
+        var curCol = currentPos.col;
+        if (curRow > 0 && maze[curRow - 1][curCol] == 0) {
+            visit(curRow - 1, curCol, currentPos);
+            return true;
+        }
+        return false;
+    }
+}
+
+function cannotPass() {
+//    alert("cannot pass")
+}
+function success() {
+    printStep();
+//    alert("success");
+}
+
+/**
+ * 开始运动
+ * @returns {boolean}
+ */
+function initRun() {
+
+    if (stack_index == -1) {
+        clearInterval(timer1);
+        cannotPass();
+        return false;
+    }
+
+    var currentPos = stack[stack_index];
+    var curRow = currentPos.row
+    var curCol = currentPos.col;
+
+    if (curRow == MAX.row - 1 && curCol == MAX.col - 1) {
+        clearInterval(timer1);
+        printStep();
+        success();
+        return false;
+    } else {
+        if (run.left(currentPos) || run.right(currentPos) || run.up(currentPos) || run.down(currentPos)) {
+
+        } else {
+
+            if (stack_index == 0) {
+                clearInterval(timer1);
+                cannotPass();
+                return false;
+            } else {
+                var nextPos = stack[stack_index - 1];
+                maze[curRow][curCol] = TAG.tracker;
+                maze[nextPos.row][nextPos.col] = TAG.cur;
+            }
+            stack_index--;
+            printMaze();
+        }
+    }
+}
+function init() {
+
+    window.timer1&&clearInterval(window.timer1);
+
+    var doc = document;
+    var initRow = +doc.getElementById("row").value || 8;
+    var initCol = +doc.getElementById("col").value || 8;
+    var speed = doc.getElementById("speed").value || 500;
+
+    MAX.row = initRow;
+    MAX.col = initCol;
+
+
+    //得到棋盘容器 设置长宽
+    window.box = document.getElementById("maze");
+    box.style.width = MAX.row * 40 + "px";
+    box.style.height = MAX.col * 40 + "px";
+
+    window.stack = [];
+    window.stack_index = 0;
+
+    window.maze=[];
+    window.nextStep=[];
+
+    //初始化棋盘和轨迹
+    initMaze();
+    initNextStep();
+
+    //初始化第一步
+    var currentPos = {
+        row: 0,
+        col: 0
+    }
+    stack.push(currentPos);
+    maze[0][0] = TAG.cur;
+
+    printMaze();
+    window.timer1 = window.setInterval(initRun, speed);
+}
+
+//    init();
+</script>
+</body>
+</html>

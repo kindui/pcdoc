@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        #container {
+            font-size: 0px;
+            margin-left: 200px;
+            width: 270px;
+            height: 200px;
+            border: 2px dashed black;
+        }
+
+        #container>div div {
+            font-size: 72px;
+            display: inline-block;
+            width: 100px;
+            height: 188px;
+            background: #ddd;
+            border: 1px solid rgb(131, 81, 52);
+        }
+
+    </style>
+</head>
+<body>
+<button id="pre">pre</button>
+<button id="next">next</button>
+
+<div id="container">
+    <div style="width:9999px">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+    </div>
+</div>
+<script>
+
+
+    function Slide(options) {
+        this.domId = options.domId;
+        this.dom = document.getElementById(this.domId);
+        this.ul = this.dom.children[0];
+        this.preButton = document.getElementById(options.preId);
+        this.nextButton = document.getElementById(options.nextId);
+        this.intervalWidth = null;
+        this.length = null;
+        this.index = 0;
+        this.isRunning = false;
+        //runCount越小,速度越快
+        this.runCount = options.runCount || 10;
+        this.init();
+        this.setCSS();
+        this.initEvent()
+    }
+    Slide.prototype = {
+        init: function () {
+            this.intervalWidth = this.ul.children[1].offsetLeft - this.ul.children[0].offsetLeft - this.ul.children[0].clientLeft;
+            this.length = this.ul.children.length;
+        },
+        setCSS: function () {
+            this.dom.style.overflow = "hidden";
+            this.dom.children[0].style.width = "9999px";
+        },
+        next: function () {
+            if (this.isRunning) {
+                return false;
+            }
+
+            if (this.index == this.length - 1) {
+                return false;
+            }
+
+            this.index++;
+
+            this.run(true);
+        },
+        prev: function () {
+            if (this.isRunning) {
+                return false;
+            }
+
+            if (this.index == 0) {
+                return false;
+            }
+            this.index--;
+            this.run(false);
+        },
+        /**
+         * 动画处理
+         * @param {true | false} direction  true为next, false为previous
+         */
+        run: function (direction) {
+
+            var interValTime = 15;
+
+            this.isRunning = true;
+            var i = 0,
+                self = this,
+            //cpc (distance per count) 每次传的距离,相当于速度
+                dpc = this.intervalWidth / this.runCount;
+            dpc = direction ? -dpc : dpc;
+            setTimeout(function () {
+                if (i++ ==self.runCount) {
+                    self.isRunning = false;
+                    return;
+                }
+
+                if (self.ul.style.marginLeft) {
+
+                    var s = (parseFloat(self.ul.style.marginLeft)+ dpc).toFixed(10);
+                    self.ul.style.marginLeft = (parseFloat(self.ul.style.marginLeft)+ dpc).toFixed(10)  + "px";
+                } else {
+                    self.ul.style.marginLeft = dpc + "px";
+                }
+                setTimeout(arguments.callee, interValTime);
+            }, interValTime);
+        },
+        initEvent: function () {
+            var self = this;
+            //next
+            if (this.nextButton.addEventListener) {
+                this.nextButton.addEventListener("click", function () {
+                    self.next();
+                }, false);
+            } else {
+                this.nextButton.attachEvent("onclick", function () {
+                    self.next();
+                }, false);
+            }
+
+            //prev
+            if (this.preButton.addEventListener) {
+                this.preButton.addEventListener("click", function () {
+                    self.prev();
+                }, false);
+            } else {
+                this.preButton.attachEvent("onclick", function () {
+                    self.prev();
+                }, false);
+            }
+
+        }
+    }
+
+    s = new Slide({
+        domId: "container",
+        preId: "pre",
+        nextId: "next"
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+1.html
+<!--pjax是pushState+ajax的简写，主要是用到了html5的新History对象。-->
+<!--在HTML4时代，Histroy对象有下面属性方法：-->
+
+<!--length：历史堆栈中的记录数。-->
+<!--back()：返回上一页。-->
+<!--forward()：前进到下一页。-->
+<!--go([delta])：delta是个数字，如果不写或为0，则刷新本页；如果为正数，则前进到相应数目的页面；若为负数，则后退到相应数目的页面。-->
+<!--在HTML5中，新增了两个方法：-->
+
+<!--pushState(data, title [, url])：往历史堆栈的顶部添加一条记录。data为一个对象或null，它会在触发window的popstate事件（window.onpopstate）时，作为参数的state属性传递过去；title为页面的标题，但当前所有浏览器都忽略这个参数；url为页面的URL，不写则为当前页。-->
+<!--replaceState(data, title [, url])：更改当前页面的历史记录。参数同上。这种更改并不会去访问该URL。-->
+<!--具体更改浏览器url的流程如下：-->
+
+<!--用ajax加载新内容。-->
+<!--加载完成新页面后，用history.replaceState方法修改当前的url。-->
+<!--用history.pushState将原来的页面加入历史记录。-->
+<!--使用document.title修改当前页的标题。-->
+<!--但是这个功能，只能在HTML5中才能够使用，如果要兼容HTML4，可以使用该一个History.js文件，支持多种js框架(包括jquery)：-->
+<!--这里详细的API介绍：https://github.com/balupton/history.js-->
+<!--https://developer.mozilla.org/zh-CN/docs/DOM/Manipulating_the_browser_history-->
+<script>
+    window.addEventListener('popstate', function(e){
+        console.log(e);
+//        if (history.state){
+//            var state = e.state;
+            //do something(state.url, state.title);
+//        }
+    }, false);
+
+    history.pushState({"tom":"jack"},"","user1");
+    history.pushState({"tom2":"jack2"},"","user2");
+//    history.replaceState({"tom3":"jack3"},"","user3");
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        @font-face {
+            font-family: myFirstFont;
+            src: url('Sansation_Light.ttf'), url('Sansation_Light.eot'); /* IE9+ */
+        }
+
+        div {
+            font-family: myFirstFont;
+        }
+
+        .block {
+            width: 50px;
+            height: 60px;
+            background-color: #ccc;
+            margin-top: 10px;
+            /*white-space: pre-wrap;*/
+            /*white-space:nowrap;*/
+            word-wrap: break-word;
+        }
+
+        #t1 {
+            -webkit-transform: rotate(30deg);
+            -moz-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+
+            /*translate()*/
+            /*rotate()*/
+            /*scale()*/
+            /*skew()*/
+            /*matrix()*/
+
+        }
+
+        #t2 {
+            border: 2px solid red;
+            border-radius: 5px;
+            box-shadow: 10px 10px 5px #888888;
+        }
+
+        #t3 {
+            transform: translate(50px, 5px);
+            -ms-transform: translate(50px, 5px); /* IE 9 */
+            -webkit-transform: translate(50px, 5px); /* Safari and Chrome */
+            -o-transform: translate(50px, 5px); /* Opera */
+            -moz-transform: translate(50px, 5px); /* Firefox */
+        }
+
+        #t4 {
+            transform: scale(2, 1);
+            -ms-transform: scale(2, 1); /* IE 9 */
+            -webkit-transform: scale(2, 1); /* Safari 和 Chrome */
+            -o-transform: scale(2, 1); /* Opera */
+            -moz-transform: scale(2, 1); /* Firefox */
+        }
+
+        #t5 {
+            transform: skew(30deg, 20deg);
+            -ms-transform: skew(30deg, 20deg); /* IE 9 */
+            -webkit-transform: skew(10deg, 0deg); /* Safari and Chrome */
+            -o-transform: skew(30deg, 20deg); /* Opera */
+            -moz-transform: skew(30deg, 20deg); /* Firefox */
+        }
+
+        #t6 {
+            -webkit-transform: rotate(45deg); /* Safari 和 Chrome */
+            -webkit-transform-origin: 0% 0%;
+            -webkit-transform-origin: 100% 100%;
+        }
+
+        #t7 {
+            -webkit-transform: rotateY(60deg); /* Safari 和 Chrome */
+        }
+
+        #t8 {
+            -webkit-transform: translateX(100px);
+            /*matrix3d(n,n,n,n,n,n,*/
+            /*n,n,n,n,n,n,n,n,n,n)	定义 3D 转换，使用 16 个值的 4x4 矩阵。*/
+            /*translate3d(x,y,z)	定义 3D 转化。*/
+            /*translateX(x)	定义 3D 转化，仅使用用于 X 轴的值。*/
+            /*translateY(y)	定义 3D 转化，仅使用用于 Y 轴的值。*/
+            /*translateZ(z)	定义 3D 转化，仅使用用于 Z 轴的值。*/
+            /*scale3d(x,y,z)	定义 3D 缩放转换。*/
+            /*scaleX(x)	定义 3D 缩放转换，通过给定一个 X 轴的值。*/
+            /*scaleY(y)	定义 3D 缩放转换，通过给定一个 Y 轴的值。*/
+            /*scaleZ(z)	定义 3D 缩放转换，通过给定一个 Z 轴的值。*/
+            /*rotate3d(x,y,z,angle)	定义 3D 旋转。*/
+            /*rotateX(angle)	定义沿 X 轴的 3D 旋转。*/
+            /*rotateY(angle)	定义沿 Y 轴的 3D 旋转。*/
+            /*rotateZ(angle)	定义沿 Z 轴的 3D 旋转。*/
+            /*perspective(n)	定义 3D 转换元素的透视视图。*/
+        }
+
+        #t9 {
+            -webkit-transition: width 1s;
+        }
+
+        #t9:hover {
+            width: 200px;
+        }
+
+        #t10 {
+            -webkit-transition: width 1s, height 1s, -webkit-transform 5s;
+            /*transition	简写属性，用于在一个属性中设置四个过渡属性。	3*/
+            /*transition-property	规定应用过渡的 CSS 属性的名称。	3*/
+            /*transition-duration	定义过渡效果花费的时间。默认是 0。	3*/
+            /*transition-timing-function	规定过渡效果的时间曲线。默认是 "ease"。	3*/
+            /*transition-delay	规定过渡效果何时开始。默认是 0。	3*/
+        }
+
+        #t10:hover {
+            width: 200px;
+            height: 200px;
+            -webkit-transform: rotate(120deg);
+        }
+
+        #t11 {
+            -webkit-transition-property: width;
+            -webkit-transition-duration: 1s;
+            -webkit-transition-timing-function: linear;
+            -webkit-transition-delay: 1s;
+            /*简写*/
+            /*-webkit-transition:width 1s linear 2s;*/
+        }
+
+        #t11:hover {
+            width: 200px;
+        }
+
+
+        @-webkit-keyframes myfirst
+        {
+            from {background: #ccc;}
+            to {background: yellow;}
+        }
+
+        @-webkit-keyframes kf2 /* Safari 和 Chrome */
+        {
+            0%   {background: red;}
+            25%  {background: yellow;}
+            50%  {background: blue;}
+            100% {background: green;}
+        }
+
+        @-webkit-keyframes zhuanchang /* Safari 和 Chrome */
+        {
+            from {-webkit-transform:translate(0,0);}
+            to {-webkit-transform:translate(200px,0);}
+        }
+
+        #t12:hover{
+            -webkit-animation: myfirst 5s;
+            /*animation	所有动画属性的简写属性，除了 animation-play-state 属性。	3*/
+            /*animation-name	规定 @keyframes 动画的名称。	3*/
+            /*animation-duration	规定动画完成一个周期所花费的秒或毫秒。默认是 0。	3*/
+            /*animation-timing-function	规定动画的速度曲线。默认是 "ease"。	3*/
+            /*animation-delay	规定动画何时开始。默认是 0。	3*/
+            /*animation-iteration-count	规定动画被播放的次数。默认是 1。	3*/
+            /*animation-direction	规定动画是否在下一周期逆向地播放。默认是 "normal"。	normal|alternate; */
+            /*animation-play-state	规定动画是否正在运行或暂停。默认是 "running"。	paused|running; */
+            /*animation-fill-mode	规定对象动画时间之外的状态。	3*/
+        }
+
+        #t13:hover{
+            -webkit-animation-name: zhuanchang;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-timing-function: linear;
+            -webkit-animation-delay: 0s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: alternate;
+            -webkit-animation-play-state: running;
+
+            /*-webkit-animation: myfirst 5s linear 2s infinite alternate;*/
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<!--
+p {word-wrap:break-word;} 强制换行
+-->
+
+<script>
+
+    for (var i = 1; i <= 20; i++) {
+        var div = document.createElement('div');
+        div.id = 't' + i;
+        div.className = 'block';
+        div.innerHTML = '222222222#t' + i;
+        document.body.appendChild(div);
+    }
+
+    document.getElementById('t13').addEventListener('click', function(e){
+//        e.target.style['webkitAnimation'] = 'myfirst 5s linear 2s infinite alternate;';
+    },false);
+
+</script>
+</body>
+</html>

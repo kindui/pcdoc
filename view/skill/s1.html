@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+
+    void(0) === undefined
+    //文字不可选择
+    document.onselectStart = function(){return false;};
+
+    "pop,shift,sort,reverse".replace(/\w+/g, function(method) {
+        vm[method] = function(e) {
+            vm.array[method]();
+        }
+    })
+
+
+    a = [3,1,2,4,5];
+    s = Math.max.apply(null,a);
+
+    var b = Array.prototype.slice.call(a) //得到的其实是新的数组
+    console.log(a !==b);
+
+    ["a","b","c"].forEach(function(item,i){
+        console.log(item);
+    })
+    //    按位“非”运算符 (~)
+    //    对一个表达式执行按位“非”（取反）。
+    //    result = ~ expression
+    //    ######### 相当于改变它的符号并且减一。
+    a = -1;
+    if( !~a){}
+
+    //    性能测试
+    //    * var count = 100000;
+    //    * console.time('1yuan'); for( i = 0; i < count; i++ ) !~-1; console.timeEnd('1yuan')
+    //    * console.time('2yuan'); for( i = 0; i < count; i++ ) 1 < -1; console.timeEnd('2yuan')
+
+
+    data = '{a:1,b:2}';
+    var obj = (new Function('return' + data))();
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

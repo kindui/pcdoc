@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+
+    function classList(e) {
+        if (e.classList) return e.classList;
+        return new CSSClassList(e);
+    }
+
+    function CSSClassList(e) {
+        this.e = e;
+    }
+
+    CSSClassList.prototype.contain = function (c) {
+        if (c.length === 0 || c.indexOf(" ") !== -1) throw new Error('Invalid class name:' + c);
+        var classes = this.e.className;
+        if (!classes) return false;
+        if (classes === c) return true;
+        return classes.search('\\b' + c + '\\b') != -1;
+    }
+
+    CSSClassList.prototype.add = function (c) {
+        if (this.contain(c)) return;
+        var classes = this.e.className;
+        if (classes && classes[classes.length - 1] != '') {
+            c = ' ' + c;
+        }
+        this.e.className = classes + c;
+    }
+
+    CSSClassList.prototype.remove = function (c) {
+        if (!this.contain(c)) return;
+        var classes = this.e.className;
+        if (c.length == 0 || c.indexOf(' ') != -1) throw new Error('Invalid class name:' + c);
+        var reg = new RegExp('\\b' + c + '\\b\\s*', "g");
+        this.e.className = classes.replace(reg, "");
+    }
+    CSSClassList.prototype.toggle = function (c) {
+        if (this.contain(c)) {
+            this.remove(c);
+            return false;
+        } else {
+            this.add(c);
+            return true;
+        }
+    }
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "css": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

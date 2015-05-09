@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模块列表</title>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="./js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+
+    <script>
+        localStorage.setItem('list_data', JSON.stringify(data));
+    </script>
+
+    <style>
+        #article > div.demo {
+
+            height: 200px;
+            border: 1px dashed #ccc;
+            overflow: auto;
+            -webkit-transition: all 100ms ease;
+            -moz-transition: all 100ms ease;
+            transition: all 100ms ease;
+
+            border-left: 5px solid #B4D0EE;
+            border-radius: 6px;
+        }
+
+        #article > div.demo:hover {
+            background-color: #eee;
+            padding-left: 5px;
+            padding-bottom: 5px;
+            z-index: 1;
+
+        }
+
+        #article > div.demo li {
+            list-style: none;
+        }
+
+        #article {
+            margin-top: 1000px;
+            -webkit-transition: all 500ms ease;
+            -moz-transition: all 500ms ease;
+            transition: all 500ms ease;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<!--./view/<%=name%>/<%=item[1]%>?name=<%=item[0]%>&controller=<%=name%>&desc=<%=item[2]%>-->
+<script type="text/html" id="section">
+    <div class="demo" style="position: absolute; width: 237px; top: <%=top%>px; left: <%=left%>px;z-index:0">
+        <h3 class="demo" style="margin-top:0;" title="<%=name%>子模块共计:<%=list.length%>个"><%=name%></h3>
+        <ul class="demo demo-plain">
+            <% for(var i = 0; i < list.length; i ++) { var item = list[i]; %>
+            <% var status = {0:'已废弃',1:'开发中',2:'已完成'}[item[3]]; %>
+            <%
+            if(item[1].indexOf('@')== -1){
+            var href = './view/'+name+'/'+item[1]+'?name='+item[0]+'&controller='+name+'&desc'+item[2];
+            }else {
+            var href = item[1].replace(/@/g,'');
+            }
+            %>
+            <li style="margin:0;list-style:none;padding-left:5px;color:#E2E2EB;font-size:14px;line-height:24px;height:24px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+                <a class="demo status-complete"
+                   href="<%=href%>" title="<%=item[0]%>
+名字：<%=item[2]%>
+状态：<%=item[3]%>:<%=status%>"><%=item[0]%></a>
+                <span style="color: #999999;" title="<%=item[2]%>"> - <%=item[2]%></span>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+</script>
+<!--<small style="color: #999999;" title="<%=item[2]%>"> - <%=item[2]%></small>-->
+<script type="text/html" id="header_tpl">
+    <header class="demo">
+        <div id="demo-toolbar">
+            <nav class="demo-toolbar"><a href="javascript:;">完美版</a> |
+                <a href="javascript://常用文档">文档 ▾</a> |
+                <a href="javascript://常用工具">工具 ▾</a> |
+                <a href="javascript://快速打开其他模块"
+                   onmouseover="javascript:$('#demo-toolbar-goto').show();$('#search_box').focus();"
+                   onmouseout="Demo.searchShow(event);">搜索 ▾</a> |
+                <a href="./index.html" title="返回模块列表">返回列表</a>
+            </nav>
+        </div>
+        <h1 class="demo" id="header_h1"><%=title%>
+            <small><%=c%>/<%=a%></small>
+        </h1>
+    </header>
+</script>
+<script type="text/html" id="header_count">
+    模块列表
+    <small title="开发中：<%=dev%>
+已完成：<%=complete%>
+已经废弃：<%=deprecated%>
+Total：<%=total%>"><%=dev%>/<%=complete%>/<%=total%>
+    </small>
+</script>
+
+<script type="text/html" id="search_box_tpl">
+    <div id="demo-toolbar-goto" class="demo-toolbar-dropdown" style="width: 300px; display: none;"
+         onmouseout="javascript:Demo.searchHide(event);" onmouseover="javascript:Demo.searchShow(event);">
+        <input id="search_box" style="width:290px;padding:5px;border:0;border-bottom:1px solid #9B9B9B;" type="text"
+               placeholder="输入模块路径/名称以快速转到">
+
+        <div class="demo-toolbar-dropdown-menu"
+             style="_height: 300px;_width:300px;word-break:break-all;max-height:300px;overflow:auto;">
+
+            <% include('search_box_list_tpl') %>
+
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="search_box_list_tpl">
+    <% for(var i = 0; i < list.length; i ++) { var item = list[i]; %>
+    <a href="<%=item.href%>" onmouseover="javascript:Demo.alinkHover(event,this)"><%==item.name%>
+        <small style="color: #999"> - <%==item.desc%></small>
+    </a>
+    <% } %>
+</script>
+
+<script type="text/html" id="footer_tpl">
+    <footer>
+        <div> author:humanhuang | QQ:316996367</div>
+    </footer>
+</script>
+
+<div id="article" class="demo" style="position: relative; ">
+</div>
+
+<script id="aaa" type="text/html">
+hgdhf
+</script>
+<script>
+
+    Demo.writeIndexHeader();
+
+
+    //输入List 列表
+    var articles_html = '';
+//    var pos_left = [0, 247, 494, 741];
+    var pos_left = [0, 255, 510, 765];
+    var pos_top = [0, 0, 0, 0];
+
+    var _top = 0;
+    $.each(data, function (_, item) {
+
+//        var len = item.list.length;
+//        var height = 300;
+//        var height = len * 24 + 30 + 30;
+        var index = _ % 4;
+
+//        item.top = pos_top[index];
+        item.top = _top * 220;
+//        pos_top[index] = pos_top[index] + height;
+        item.left = pos_left[index];
+        articles_html += template.render('section', item);
+        if (index == 3) _top++;
+
+    });
+//    $a = $('#article').append($(articles_html));
+    $a = $('#article');
+//    $a[0].innerHTML = articles_html;
+
+    $a.html(articles_html);
+//    $a.html($('#aaa').html());
+    setTimeout(function(){
+        $a.css('margin-top','0');
+    },0);
+
+    //统计模块数量, 搜索框
+    setTimeout(function () {
+        Demo.statModule(data);
+        Demo.writeSearchBox(data);
+    }, 0);
+
+    Demo.writeFooter();
+
+
+</script>
+</body>
+</html>

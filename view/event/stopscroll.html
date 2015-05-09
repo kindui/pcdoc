@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script>
+
+    $(function(){
+        for(var i=0;i<100;i++){
+            $('<div/>').text(i).appendTo(document.body);
+        }
+    });
+    function disabledMouseWheel() {
+        if (document.addEventListener) {
+            document.addEventListener('DOMMouseScroll', scrollFunc, false); //FF
+        }//W3C
+        window.onmousewheel = document.onmousewheel = scrollFunc;//IE/Opera/Chrome
+    }
+    function scrollFunc(evt) {
+        evt = evt || window.event;
+        if(evt.preventDefault) {
+            // Firefox
+            evt.preventDefault();
+            evt.stopPropagation();
+        } else {
+            // IE
+            evt.cancelBubble=true;
+            evt.returnValue = false;
+        }
+        return false;
+    }
+    window.onload=disabledMouseWheel;
+</script>
+<script type="text/html" id='test1'>
+    $(function(){
+        for(var i=0;i<100;i++){
+            $('<div/>').text(i).appendTo(document.body);
+        }
+    });
+    function disabledMouseWheel() {
+        if (document.addEventListener) {
+            document.addEventListener('DOMMouseScroll', scrollFunc, false);
+        }//W3C
+        window.onmousewheel = document.onmousewheel = scrollFunc;//IE/Opera/Chrome
+    }
+    function scrollFunc(evt) {
+        evt = evt || window.event;
+        if(evt.preventDefault) {
+            // Firefox
+            evt.preventDefault();
+            evt.stopPropagation();
+        } else {
+            // IE
+            evt.cancelBubble=true;
+            evt.returnValue = false;
+        }
+        return false;
+    }
+    window.onload=disabledMouseWheel;
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

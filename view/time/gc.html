@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<button onclick="add();">add p</button>
+<button onclick="ref();">ref p</button>
+<button onclick="removeit();">remove p</button>
+<button onclick="removeall();">remove all</button>
+<script>
+
+    function add() {
+        var i = 0;
+        var p;
+        while (++i <= 1000) {
+            p= document.createElement('p');
+            p.innerHTML = i;
+            document.body.appendChild(p);
+        }
+    }
+
+    function ref() {
+        var ps = [].slice.call(document.getElementsByTagName('p'), 0);
+        for (var h = 0; h < ps.length; h++) {
+            var item = ps[h];
+            window['pre' + h+1] = item;
+        }
+    }
+
+    function removeit() {
+        var ps = [].slice.call(document.getElementsByTagName('p'), 0);
+        for (var h = 0; h < ps.length; h++) {
+            var item = ps[h];
+            item.parentNode.removeChild(item);
+        }
+    }
+
+    function removeall() {
+        for (var h = 0; h < 1000; h++) {
+            window['pre' + h+1] =null;
+        }
+    }
+
+
+    //定义Item
+    //    function Item( x ){
+    //        this.x = x
+    //    }
+    //    var _a = new Item( '__________a' );//实例化一个Item对象，并被一个全局变量引用
+    //    new Item('without var ref'); //试一下在snapshot里找一下这个对象？
+
+
+    //    ps =null;
+
+
+    //    window.el = document.getElementById('_p');
+
+    //    function remove() {
+    //        window.el = document.getElementById('_p');
+    //        el.mark = 'marked';
+    //
+    //        //移除P
+    //        el.parentNode.removeChild(el);
+    //        //el = null;
+    //    }
+    //    remove();
+    //    function remove2() {
+    //        var elP = document.getElementById('_p');
+    //        elP.mark = 'marked';
+    //
+    ////往P插入一个span
+    //        function appendChildToP() {
+    //            var elSpan = document.createElement('span');
+    //            elSpan.mark = 'marked';
+    //            elP.appendChild(elSpan);
+    //        }
+    //
+    ////移除P
+    //        function removeP() {
+    //            elP.parentNode.removeChild(elP);
+    ////elP = null;
+    //        }
+    //    }
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+    <link rel="stylesheet" href="test/1.css"/>
+    <link rel="stylesheet" href="test/2.css"/>
+    <style>
+        .ergfergr {
+            font: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript" id='test1'>
+    var s = document.styleSheets;
+    s[4].disabled = true;
+    s[0].cssRules;
+    //if IE
+    s[0].rules;
+
+
+    s[0].rules[0].selectorText;
+    s[0].rules[0].style.cssText;
+
+
+    document.styleSheets[4].insertRule("H1 { text-weight: bold}", 0);  // not support in IE
+
+    /**
+     * 给文档添加样式表
+     * @param {string|object} styles
+     */
+    function addStyle(styles) {
+
+        var styleEl , stylesheet;
+        if (document.createStyleSheet) {
+            // IE support
+            stylesheet = document.createStyleSheet();
+        } else {
+            var head = document.getElementsByTagName('head')[0];
+            var styleEl = document.createElement('style');
+            head.appendChild(styleEl);
+            stylesheet  = document.styleSheets[document.styleSheets.length -1];
+        }
+
+        if(typeof styles == 'string'){
+            if(styleEl) styleEl.innerHTML = styles;
+            else stylesheet.cssText = styles;
+        }else{
+            var i= 0,selector;
+            for(selector in styles){
+                if(stylesheet.insertRule){
+                    var rule =selector + '{' + styles[selector] + '}';
+                    stylesheet.insertRule(rule,i++);
+                }else{
+                    stylesheet.addRule(selector,styles[selector],i++);
+                }
+            }
+        }
+    }
+
+</script>
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

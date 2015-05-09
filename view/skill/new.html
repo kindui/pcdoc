@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+
+    function A() {
+        if ((this instanceof A) === false) {
+            console.log('must new');
+        }else{
+            console.log('is newed');
+        }
+    }
+
+    A();
+    new A();
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

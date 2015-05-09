@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+    var throttle = function( fn, timeout ){
+        var timer;
+
+        return function(){
+            var self = this,
+                    args = arguments;
+
+            clearTimeout( timer );
+
+            timer = setTimeout(function(){
+                fn.apply( self, args );
+            }, timeout );
+        };
+    };
+
+    window.onresize = throttle(function(){
+        // 自适应布局的代码...
+    }, 100 );
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "延迟执行事件": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

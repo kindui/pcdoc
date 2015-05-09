@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+
+    //"YY年MM月dd日 hh:mm ss"
+    //"YYYY年MM月dd日 hh:mm ss"
+    function dateFormat(d, pStr) {
+        var map = {
+            "YYYY": d.getFullYear(),
+            "YY": d.getFullYear().toString().substring(2),
+            "MM": d.getMonth() + 1,
+            "dd": d.getDate(),
+
+            "hh": d.getHours(),
+            "mm": d.getMinutes(),
+            "ss": d.getSeconds()
+        }
+
+        for (var i in map) {
+            pStr = pStr.replace(new RegExp(i), function (r) {
+                var t = map[i].toString();
+                return  t.length === 1 ? "0" + t : t;
+            });
+        }
+        return pStr;
+    }
+    d = new Date();
+    d.setDate(2);
+    s = dateFormat(d, "YYYY年MM月dd日 hh:mm ss");
+    console.log(s);
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

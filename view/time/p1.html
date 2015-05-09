@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+    console.log(window.performance);
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "performance": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

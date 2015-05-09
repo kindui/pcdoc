@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+
+    </script>
+</head>
+<body>
+
+<script type="text/html" id='test'>
+    $request = $.getJSON('test.php');
+
+    $request.done(process1);
+    $request.done(process2);
+    $request.always(process3);
+
+    function process1() {
+        console.log('process1:');
+    }
+    function process2() {
+        console.log('process2');
+    }
+    function process3() {
+        console.log('process3');
+    }
+</script>
+<script type="text/html" id='callback'>
+    function checkPassword(username, password, callback) {
+        var pwdHash;
+        var queryStr = 'select * from user where username = ?';
+        db.query(queryStr, username, queryCallback);
+
+        function queryCallback(err, result) {
+            if (err) throw err;
+            pwdHash = result['password_hash'];
+            hash(password, hashCallback);
+        }
+
+        function hashCallback(data) {
+            callback(data == pwdHash);
+        }
+    }
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "jquery-defered使用": $('#test').html(),
+        "callback使用": $('#callback').html()
+    });
+</script>
+
+</body>
+</html>

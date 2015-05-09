@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+    function init(){
+
+        try{
+            setTimeout(return_timeout(test,1),100);
+        }catch(e){
+            console.log('init catch:1');
+        }
+        try{
+            return_timeout(test,2)();
+        }catch(e){
+            console.log('init catch:2');
+        }
+    }
+
+    /**
+     * setTimeout可以传递函数参数
+     * @returns {Function}
+     */
+    function return_timeout(){
+        var slice = Array.prototype.slice;
+        var self = this;
+        var args = slice.call(arguments,0);
+        var fun = args[0];
+        var params = args.slice(1);
+        return function(){
+            fun.apply(self,params);
+        }
+    }
+
+    function test(mark){
+        try{
+            aa;
+        }catch(e){
+            console.log('test catch:'+mark);
+            throw new Error('from test' +mark);
+        }
+    }
+    init();
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "取消注释观察catch是否捕获": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

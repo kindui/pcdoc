@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<iframe src="i1.html" id="if1"></iframe>
+<script type="text/javascript" id='test1'>
+    //<iframe src="i1.html" id="if1"></iframe>
+    //引用iframe的方式
+
+    window.frames[0];
+    window.frames.if1;
+    window.if1
+    window[0]
+
+    var if1 = document.getElementById('if1');
+    var w = if1.contentWindow;
+    w.frameElement // 得到iframe Element
+
+
+    //window.name 是一个可以传值的hack
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "create": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

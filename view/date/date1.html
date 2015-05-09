@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+    var yourtime='2009-12-10';
+    yourtime = yourtime.replace(/-/g,"/");//替换字符，变成标准格式
+    var d2=new Date();//取今天的日期
+    var d1 = new Date(Date.parse(yourtime));
+    //Date.parse 兼容性好
+    if(d1>d2){
+        alert("开始大于结束");
+    }
+    //时间戳 : 60 * 60 * 24 = 86400 是毫秒级别的,还要 / 1000
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

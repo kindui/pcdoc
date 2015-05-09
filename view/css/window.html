@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+
+        div.window{
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 3px outset gray;
+        }
+        div.titlebar {
+            position: absolute;
+            top: 0;
+            background-color: #aaa;
+            border-bottom: 2px groove gray;
+            font: bold 11pt sans-serif;
+            width: 295px;
+            height: 18px;
+            padding: 5px 2px 5px 3px;
+        }
+        div.content {
+            position: absolute;
+            top: 30px;
+            overflow: auto;
+            padding: 5px;height: 250px;
+            width: 290px;
+            background-color: #fff;
+        }
+        div.icon{
+            position: absolute;
+            right: 4px;
+            top: 5px;
+        }
+
+        div.translucent {
+            opacity: 0.75;
+            filter:alpha(opacity=75);
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="window">
+    <div class="titlebar">
+        这里是标题
+    </div>
+    <div class="icon">X</div>
+    <div class="content">
+        这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>
+        这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>
+        这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>
+    </div>
+</div>
+
+<div class="window" style="left: 100px; top:100px;">
+    <div class="titlebar">
+        这里是标题
+    </div>
+    <div class="icon">X</div>
+    <div class="content translucent"  >
+        这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>
+        这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>
+        这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>这里是内容<br/>
+    </div>
+</div>
+
+</body>
+</html>

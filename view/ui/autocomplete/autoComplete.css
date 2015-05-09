@@ -1,0 +1,36 @@
+    .ng-autocomplete {
+        background-color: #ffffff;
+        cursor: pointer;
+        overflow-y: auto;
+        z-index:1000;
+    }
+
+    input.suggesting{
+         background: url(./loading.gif) no-repeat right;
+     }
+    .ng-autocomplete * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .ng-autocomplete .even {
+        background-color: #eee;
+    }
+
+    .ng-autocomplete .cur {
+        background-color: #0A246A;
+        color: white;
+    }
+
+    .ng-autocomplete li {
+        list-style: none;
+        overflow: hidden;
+        line-height:18px;
+    }
+.ng-autocomplete li strong{
+       color:red;
+    }
+    .ng-autocomplete ul {
+        background-color: white;
+        color: #000000;
+    }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+// 实现类似的 add(2)  add(3)(4);
+
+    function add(num){
+        var result = num || 0;
+        function fn(a){
+            result += a;
+//            return arguments.callee;
+//            return fn;
+//            return this;
+        }
+        fn.toString  = function(){return result};
+        return fn;
+    }
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+    @echo off
+    rem 关闭自动输出
+    echo ____ ______ ____ ____ ___ ____
+    echo /\ _`\ /\__ _\/\ _`\ /\ _`\ /'___`\ /\ _`\
+    echo \ \,\L\_\\/_/\ \/\ \,\L\_\ \ \ \L\_\/\_\ /\ \\ \ \L\_\
+    echo \/_\__ \ \ \ \ \/_\__ \ _______ \ \ _\/\/_/// /__\ \ _\L
+    echo /\ \L\ \ \ \ \ /\ \L\ \ /\______\ \ \ \/ // /_\ \\ \ \L\ \
+    echo \ `\____\ \ \_\ \ `\____\ \/______/ \ \_\ /\______/ \ \____/
+    echo \/_____/ \/_/ \/_____/ \/_/ \/_____/ \/___/
+    echo \ http://code.google.com/p/jsdoc-toolkit/
+
+    :: jsdoc安装的路径
+    set jdt=C:/tools/jsdoc-toolkit/
+    :: jsdoc模版路径
+    set tpm=%jdt%templates/jsdoc/
+    :: 文档输出路径
+    set doc=docs/
+    :: 要生成js模版的文件路径
+    set js=sample/
+
+    echo \ start ...
+    echo \ ...
+    echo \ ...
+    java -jar %jdt%jsrun.jar %jdt%app/run.js -t=%tpm% -d=%doc% %js%
+    echo \ succeed
+
+    pause
+
+    window.js
+
+    /**
+    * Window
+    * @creator changyin
+    */
+
+    /**
+    * @class 一个窗体类.
+    * @constructor
+    * @param {String} 页面名称
+    * @param {Object} 页面配置
+    * @return 一个窗体实例
+    */
+    var Window = function (title, config) {
+
+    /**
+    * 窗体名称
+    * @type String
+    */
+    this.title = title;
+
+    //初始化窗体
+    this.init();
+
+    }
+
+    /**
+    * 页面初始化
+    * @private
+    */
+    Window.prototype.init = function () {
+
+        //dostr
+    }
+
+    /**
+    * 获取窗体的宽度
+    * @returns url地址
+    */
+    Window.prototype.getWidth = function () {
+        return this.widht;
+    }
+
+    /**
+    * 设置窗体的宽度
+    * @param {Number} 要设置的窗体的宽度
+    */
+    Window.prototype.setWidth = function (width) {
+        this.width = width
+    }
+</script>
+<script>
+
+</script>
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

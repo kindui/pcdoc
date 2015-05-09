@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+    module.exports = function (grunt) {
+        grunt.initConfig({
+            pkg: grunt.file.readJSON("package.json"),
+            concat: {
+                task1: {
+                    options: {
+                        banner: '/* <%= pkg.name || pk.title %> - v<%= pkg.version %> - <%= pkg.homepage  %> - <%= grunt.template.today("yyyy-mm-dd") %> <%= pkg.author %>*/\n'
+                    },
+                    src: [
+                        "lib/Y/core/y.js",
+                        "lib/Y/core/browser.js",
+                        "lib/Y/core/util.js",
+                        "lib/Y/core/dom.js",
+                        "lib/Y/core/event.js",
+                        "lib/Y/core/ajax.js",
+                        "lib/Y/core/date.js",
+                        "lib/Y/core/cookie.js"
+                    ],
+                    dest: 'lib/Y/Y.js'
+                }
+            },
+            uglify: {
+                task1: {
+                    options: {
+                        banner: '/*<%= pkg.author %> - QQ:316996367 - tencent@shanghai*/\n'
+                    },
+                    files: {
+                        'lib/Y/Y.min.js': ['lib/Y/Y.js']
+                    }
+                }
+            },
+            watch: {
+                scripts: {
+                    files: ['**/*.js'],
+                    tasks: ['default'],
+                    options: {
+                        spawn: false
+                    }
+                }
+            }
+        });
+        //自定义任务
+        //自动给文件添加版本号和修改时间
+        grunt.registerTask("post-concat", function () {
+            var filepath = "lib/Y/Y.js";
+            var version = grunt.config("pkg.version");
+            var released = grunt.template.today("yyyy-mm-dd");
+
+            var code = grunt.file.read(filepath);
+            code = code.replace(/@VERSION/g, version);
+            code = code.replace(/@RELEASED/g, released);
+            grunt.file.write(filepath, code);
+
+            //grunt.log.writeln('"@VERSION" is replaced to "' + version + '".');
+        })
+        // Load grunt tasks from NPM packages
+        grunt.loadNpmTasks("grunt-contrib-concat");
+        grunt.loadNpmTasks("grunt-contrib-uglify");
+        grunt.loadNpmTasks("grunt-contrib-watch");
+
+        grunt.registerTask("default", ["concat", "post-concat", "uglify", "watch"]);
+
+    };
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "Y.js": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

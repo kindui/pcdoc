@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<div id="next" style="position: fixed;right: 0;bottom: 0;background: #ccc">next Page</div>
+<div id="prev" style="position: fixed;left: 0;bottom: 0;background: #ccc">prev Page</div>
+
+<script>
+    var i = 0;
+    var pageSize = $(window).height();
+    while (i++ < 100)
+        $('<div/>', {
+            text: 'nihiao' + i
+        }).css({
+                    background: i%2==0?'#ccc':'green',
+                    height: pageSize
+                }).appendTo(document.body);
+
+
+    function goPage(n) {
+        var $w = $(window);
+        var pageSize = $w.height();
+        var cur = $w.scrollTop();
+//        var nowCur = cur + pageSize * n;
+//        $w.animate({
+//            'scrollY':nowCur
+//        });
+        $w.scrollTop(cur + pageSize * n);
+    }
+
+    $('#next,#prev').click(function () {
+        this.id == 'next' ? goPage(1) : goPage(-1);
+    });
+</script>
+</body>
+</html>

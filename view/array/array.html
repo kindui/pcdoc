@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+    var imgs = document.getElementsByTagName("img");
+    var aImg = Array.prototype.slice.call(imgs);
+
+    // IE 中不支持
+    function convertToArray(nodes){
+        var array = null;
+        try{
+            array = Array.prototype.slice.call(nodes,0);
+        }catch(ex){
+            array = [];
+            for(var i = 0,len =nodes.length; i < len; i++){
+                array[i] = nodes[i];
+            }
+        }
+        return array;
+    }
+
+
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<button id="btn">button</button>
+<script type="text/javascript" id='test1'>
+$('#btn').click(function(e,a,b,c){
+    console.log(e,a,b,c);
+})
+    /*
+    $("<img/>",{
+       src:'aaa.png',
+        css:{
+            borderWidth:5
+        },
+        click:handleClick
+    });
+    $('.test').is(':hidden');
+
+    $('a').attr('target',function(){
+       console.log(this);
+        return '_blank';
+    });
+
+    $("#lead").is('.aaa');
+    $("#lead").is('.aaa');  // 比hasClass 更加灵活
+
+    $('h1').text(function(n,cur){
+      return ;
+    })
+
+    $('h1').offset(); // 相对于文档位置
+    $('h1').position(); // 相对于屏幕位置
+
+
+    $(window).height(); //窗口
+    $(document).height(); //文档
+
+    $('body').width();
+    $('body').innerWidth(); //包含内边距
+    $('body').outerWidth(); //包含内边距和边框
+    $('body').outerWidth(true); //包含内边距和边框和外边距
+
+    //dom maniple
+
+        append
+        prepend
+        after
+        before
+        replaceWith
+
+        appendTo
+        prependTo
+        insertAfter
+        insertBofore
+        replaceAll
+
+        remove()
+        detach()
+        clone()
+
+        wrap()
+        wrapInner()
+        wrapAll()
+
+
+$('a').bind({
+    mouseenter:function(){
+
+    },
+    mouseleave:function(){
+
+    }
+})
+
+$('a').unbind("mouseenter mouseleave");
+$('a').bind('click.myMod');
+$('a').unbind('.myMod');
+
+     */
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "jquery": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

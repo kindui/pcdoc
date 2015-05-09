@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/html" id='test1'>
+
+    //    对象必须new出来
+    function Person() {
+        if (!(this instanceof Person)) {
+            throw Error('Person must new');
+        }
+    }
+
+    var o = {
+        person: Person
+    }
+    o.person();
+    //        var a = new Person();
+
+
+    function Universe() {
+
+        if (typeof Universe.instance === "object") {
+            return Universe.instance;
+        }
+
+        this.startTime = 0;
+        this.bigBang = "Big";
+
+        Universe.instance = this;
+        return this;
+    }
+    //缺点 instance属性公开出来,外部可以随时更改
+
+    //采用闭包  重写构造函数
+    function Universe(name, age) {
+
+        var instance = this;
+
+        this.fname = name || "";
+        this.age = age || 0;
+
+
+        //重写构造函数
+        Universe = function () {
+            return instance;
+        }
+    }
+    Universe.prototype.nothing = true;
+    var a = new Universe();
+    Universe.prototype.everything = true;
+    var b = new Universe();
+    Universe.prototype.test = "nihao";
+    //当给Person.prototype加属性时,a,b默认的constructor仍然是指向了以前的原始构造函数,而不是重新定义的构造函数
+    //    a.test(); //返回undefined
+
+
+    //调整后
+
+
+    var Universe;
+    (function () {
+        var instance;
+
+        Universe = function () {
+            if (instance) {
+                return instance;
+            }
+
+            instance = this;
+            this.fname = "";
+            this.age = 0;
+        }
+    })();
+
+
+    //方法三
+
+    function Universe() {
+        var instance;
+
+        Universe = function () {
+            return instance;
+        }
+
+        Universe.prototype = this;
+        instance = new Universe();
+        Universe.constructor = Universe;
+
+        instance.fname = "";
+        instance.age = 0;
+
+        return instance;
+    }
+
+
+    function F() {
+        var instance;
+
+        if (instance) {
+            return instance;
+        }
+
+        F = function () {
+            return instance;
+        }
+
+        instance = new F();
+
+        instance.fname = "";
+        instance.age = 0;
+
+        return instance;
+    }
+
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "单例模式": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

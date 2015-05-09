@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="d1" style="width:200px;height:200px;border:solid 1px #000;">123123123123</div>
+<script>
+    alert(1);// comment this line or not
+    //UI线程会有延迟，还没有开始执行UI线程，js线程就开始执行啦
+    var t = new Date;
+    while (new Date - t < 2000);
+    console.log(1);
+</script>
+
+
+
+<div id="d2" style="width:200px;height:200px;border:solid 1px #000;">123123123123</div>
+<script>
+    var t2 = new Date;
+    while (new Date - t2 < 2000);
+    console.log(2);
+</script>
+<div id="d3" style="width:200px;height:200px;border:solid 1px #000;">123123123123</div>
+<script>
+    var t3 = new Date;
+    while (new Date - t3 < 2000);
+    console.log(3);
+</script>
+</body>
+</html>

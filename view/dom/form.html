@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+
+<form>
+    <input type="radio" name="method" value="1" checked>
+    <input type="radio" name="method" value="2">
+    <input type="radio" name="method" value="3">
+</form>
+
+
+<script>
+
+    function whocheck(){
+        var methods = document.forms[0].elements.method;
+        var i = 0, l = methods.length;
+        for (; i < l; i++) {
+            if(methods[i].checked) {
+                s = methods[i].value;
+            }
+        }
+        console.log(s);
+    }
+
+</script>
+<script type="text/javascript" id='test1'>
+
+    // 有name和id属性的<form>元素可以有很多方法来选取
+    // window.address  不可靠
+    // document.address
+    //documents.forms.address
+    // document.forms[n]
+    // 索引表单对象的elements
+    // document.forms.address.elements
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "form": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

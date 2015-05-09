@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+
+//字符串的正则方法
+String.match
+String.replace  //第一个参数是正则表达式 或者 字符串, 第二个是要替换的值
+String.search   // 如果找到了返回位置, 否则返回-1, 参数肯定是正则表达式
+String.indexOf
+
+
+//正则的方法有:
+reg.compile
+reg.exec
+reg.test
+
+//许多标点符号具有特殊含义
+//  ^ $ . * + ? = ! : | / \ () [] {}
+/*
+[...] 方括号里面任意字符
+[^...] 不再方括号里面任意字符
+. 除换行符,终止符的任意字符
+\w 任何ASCII字符  等价 [a-zA-Z]
+\W 等价 [^a-zA-Z]
+\s 任意空白符
+\S 任何非空白符
+\d 任何数字 [0-9]
+\D [^0-9]
+
+\b 退格
+
+重复
+
+ 都是匹配前一项
+{n,m} 至少n次,不超过m次    n<= x <= m
+{n,} 前n次或者更多
+{n} n次
+? 匹配前一项0次或者1次,等价 {0,1}
++ 匹配前一项1次或者多次 {1,}
+* 匹配前一项0次或者多次 {0,}
+
+
+/ab|cd|ef/
+/a|ab/  "ab" 只能匹配a
+/java(script)?/ 可以匹配java 或者 javascript
+/(ab|cd)+ |ef/  可以匹配ef ,ab ,cd 或者ab|cd的一次或者多次
+/[a-z]+(\d+)/
+
+匹配单引号或者双引号:  /['"][^'"]*['"]/  有bug
+/(['"])[^'"]*\1/
+
+
+
+| 选择
+(...) 组合,这个单元可以通过*, +, ?,| 等符号修饰
+(?:...) 只组合, 不记忆
+\n  和第n个分组相匹配, 组索引是从左到右的括号数,(?:的不编码
+
+/\b[jJ]ava\b/
+/\B[Ss]cript/
+
+
+先行断言:
+(?= )
+/[Jj]ava([Ss]cript)?(?=\:)/
+
+^ 开头
+$ 结尾
+\b 单词边界
+\B 非单词边界
+(?= ) 先行断言
+(?! ) 负向先行断言
+
+修饰:
+i 不区分大小写
+g 全局的, 而不是找到第一个就停止
+m 多行匹配, ^匹配第一行, $匹配一行的结束字符
+
+
+
+
+
+var a = ' "你好吗" ';
+a.replace(/"([^']*)"/g, " “$1” ");
+
+
+"1 plus 2 equals 3".match(/\d+/g);
+返回 ["1","2","3"]
+
+
+解析http://www.example.com/~david
+
+var url_pattern = /^(\w+):\/\/([\w.]+)\/(\S*)/;
+var text = 'http://data.51buy.com/admin/main.htm';
+
+var result = text.match(url_pattern);
+
+if(result != null){
+
+console.dir(result);
+}
+
+
+'1, 2, 3, 4, 5'.split(/\s*,\s*8/);
+
+
+var zipcode  = new RegExp("\\d{5}","g");
+
+
+RegExp.exec()
+和String.match() 的思路是差不多的
+
+
+
+
+ */
+
+
+
+
+
+
+
+    var s = "nihaofoxxx";
+    var r = /(hao)(fo)/;
+//    s.search('hao');
+//    s.indexOf('hao');
+    s.match(r);
+    RegExp.$1;
+    RegExp.$2;
+
+
+    var s = 'abcabcabc';
+
+    s.replace(/bc/g,function(a,b,c){
+//        console.log(a,b,c);
+//        bc 1 abcabcabc
+//        bc 4 abcabcabc
+//        bc 7 abcabcabc
+    });
+
+    s.replace(/a(bc)/g,function(a,b,c,d){
+//        console.log(a,b,c,d);
+//        abc bc 0 abcabcabc
+//        abc bc 3 abcabcabc
+//        abc bc 6 abcabcabc
+    });
+
+    s.replace(/a(b(c))/g,function(a,b,c,d,e){
+        console.log(a,b,c,d, e);
+//        abc bc c 0 abcabcabc
+//        abc bc c 3 abcabcabc
+//        abc bc c 6 abcabcabc
+
+    });
+
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "": $('#test1').html()
+    });
+</script>
+
+<script>
+    var s = 'abcabcabc';
+
+    s.replace(/bc/g,function(a,b,c){
+//        console.log(a,b,c);
+//        bc 1 abcabcabc
+//        bc 4 abcabcabc
+//        bc 7 abcabcabc
+    });
+
+    s.replace(/a(bc)/g,function(a,b,c,d){
+//        console.log(a,b,c,d);
+//        abc bc 0 abcabcabc
+//        abc bc 3 abcabcabc
+//        abc bc 6 abcabcabc
+    });
+
+    s.replace(/a(b(c))/g,function(a,b,c,d,e){
+        console.log(a,b,c,d, e);
+//        abc bc c 0 abcabcabc
+//        abc bc c 3 abcabcabc
+//        abc bc c 6 abcabcabc
+
+    });
+
+</script>
+</body>
+</html>

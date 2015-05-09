@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+
+    Pubsub.sub("click", function () {
+        console.log('1 click');
+    })
+    Pubsub.sub("click", function () {
+        console.log('2 click');
+    })
+    Pubsub.pub('click');
+</script>
+
+
+<script>
+
+    var promise = $.getScript('lib/Pubsub.js');
+    promise.done(function (ret) {
+        Demo.writeExample({
+            "订阅者/发布者模式": ret,
+            "ex1": $('#test1').html()
+        });
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+</head>
+<body>
+<script type="text/javascript" id='test1'>
+    function Person() {
+
+        this.personName = "p1";
+    }
+    Person.prototype.test = function () {
+        console.log("Person test");
+    }
+
+
+    function Student() {
+        this.superclass.constructor.call(this);
+        this.stuName = "s1";
+    }
+
+    extend(Student, Person);
+    //Student 的 prototype 必须写在 extend 函数的后面
+    Student.prototype.test = function () {
+        console.log("Student test");
+    }
+
+    s = new Student();
+    console.log(s);
+    s.test();
+    s.superclass.test();
+
+    function extend(sub, superClass) {
+        var F = function () {
+        };
+        F.prototype = superClass.prototype;
+        sub.prototype = new F();
+        sub.prototype.constructor = sub;  // 为了适应instanceof
+        sub.prototype.superclass = superClass.prototype;
+    }
+</script>
+
+
+<script>
+    Demo.writeExample({
+        "extends": $('#test1').html()
+    });
+</script>
+
+</body>
+</html>

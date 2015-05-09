@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>CSS3卡牌翻牌效果</title>
+    <script type="text/javascript" src="../../js/lib/config.js"></script>
+    <script>
+        g.initDemo();
+    </script>
+    <style type="text/css">
+        #box {
+            margin: 0 auto;
+            width: 200px;
+            height: 337px;
+            background: url('img/tarot_back.jpg') 0 0 no-repeat;
+            /*background: red;*/
+            -webkit-transition: -webkit-transform 0.4s ease-in, width 1s, background 0.8s;
+        }
+
+        .nor {
+            /*background: red;*/
+            -webkit-transform: rotate3d(0, 1, 0, 0deg);
+        }
+
+        .back {
+            /*background: green;*/
+            -webkit-transform: rotate3d(0, 1, 0, 180deg);
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="nor"></div>
+</body>
+<script type="text/html" id="test">
+function $(d) {
+    return document.getElementById(d);
+}
+
+var box = $('box');
+
+box.addEventListener('click', function (e) {
+    box.className = 'back';
+    setTimeout(function () {
+        box.className = 'nor';
+    }, 500);
+}, false);
+    box.click();
+</script>
+
+<script>
+    Demo.writeExample({
+
+        'css翻牌效果': $('#test').html()
+    });
+</script>
+</html>

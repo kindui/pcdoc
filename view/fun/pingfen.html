@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <!--<link href="../../../lib/Y/css/Y.css" type="text/css" rel="stylesheet">-->
+    <script type="text/javascript" src="../../../lib/Y/Y.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial;
+            font-size: 11.818181991577148px;
+            color: #666;
+        }
+
+        .ymPingfen span {
+            background: url(star.png) no-repeat;
+            text-indent: -999px;
+            cursor: pointer;
+            width: 18px;
+            display: inline-block;
+            height: 18px;
+        }
+
+        .ymPingfen strong {
+            color: #f60;
+            font-size: 14px;
+        }
+
+        .ymPingfen .active {
+            background-position: 0 -28px;
+        }
+
+        .ymTip em {
+            color: #f60;
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        ul.star p {
+            position: absolute;
+            padding: 2px 5px;
+            display: none;
+            background-color: #fff;
+            border: 2px orange solid;
+            z-index: 99;
+        }
+
+    </style>
+</head>
+<body>
+<!--<div style="border: 1px solid red;width:20px;height: 2500px"></div>-->
+<p style="top: 70px; left: 168px; display: block;"><em>非常满意0</em><br>质量非常好，与卖家描述的完全一致，非常满意</p>
+
+<p id="nima" style="border: 1px dashed red;width: 100px;height: 100px;display: none">nima</p>
+
+<div class="ymPingfen" id="test">
+    <label>描述相符:</label>
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+</div>
+
+<div class="ymPingfen" id="test2">
+    <label>描述相符:</label>
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+</div>
+<script>
+    function PingFen(options) {
+        this.value = -1;
+        this.onclick = options.onclick;
+        this.domId = options.domId;
+        this.msg = options.msg;
+        this.clicked = false;
+        this.div = document.getElementById(this.domId);
+        this.spans = this.div.getElementsByTagName("span");
+        this.setIndex();
+        this.initEvent();
+        this.createMsgBox();
+    }
+
+    PingFen.prototype = {
+
+        createMsgBox: function () {
+            var me = this;
+            this.msgBox = document.createElement("div");
+            this.msgBox.className = "ymTip";
+            Y(me.msgBox).css({
+                position: "absolute",
+                padding: "2px 5px",
+                display: "none",
+                backgroundColor: "#fff",
+                border: "2px orange solid",
+                zIndex: "99"
+            });
+            document.body.appendChild(this.msgBox);
+        },
+        // add index to span
+        setIndex: function () {
+            var spans = this.spans;
+            for (var i = 0, len = spans.length; i < len; i++) {
+                var item = spans[i];
+                item.data_index = i;
+            }
+        },
+        getValue: function () {
+            return this.value;
+        },
+        changeStatus: function (target, isActive) {
+            if (isActive) {
+                for (var i = 0; i <= target.data_index; i++) {
+                    this.spans[i].className = "active";
+                }
+            } else {
+                for (var i = 0; i <= target.data_index; i++) {
+                    this.spans[i].className = "";
+                }
+            }
+        },
+        isClicked: function () {
+            return this.clicked;
+        },
+        splitString: function (str) {
+            var splitIndex = str.indexOf("|"),
+                    title = str.substring(0, splitIndex),
+                    content = str.substring(splitIndex + 1);
+            return {
+                title: title,
+                content: content
+            }
+        },
+        initEvent: function () {
+            var me = this;
+            Y(this.div).on("mouseover", function (e) {
+                if (!me.isClicked()) {
+                    var target = e.target;
+                    if (target.nodeName === "SPAN") {
+                        me.changeStatus(target, true);
+                        var s = Y(target).offset();
+                        if (me.msg) {
+
+                            var msgArr = me.splitString(me.msg[target.data_index]);
+
+                            var em = document.createElement("em");
+                            em.innerHTML = msgArr.title;
+
+                            me.msgBox.innerHTML = "";
+                            me.msgBox.appendChild(em);
+                            me.msgBox.appendChild(document.createElement("br"));
+                            me.msgBox.appendChild(document.createTextNode(msgArr.content));
+                            Y(me.msgBox).css({
+                                left: s.left + "px",
+                                top: s.top + 20 + "px",
+                                display: "block"
+                            });
+                        }
+                    }
+                }
+            })
+                    .on("mouseout", function (e) {
+                        if (!me.isClicked()) {
+                            var target = e.target;
+                            me.changeStatus(target, false);
+                            me.msgBox.style.display = "none";
+                        }
+                    })
+                    .on("click", function (e) {
+                        if (!me.isClicked() && e.target.nodeName == "SPAN") {
+                            me.clicked = true;
+                            var target = e.target;
+                            if (target.nodeName === "SPAN") {
+                                me.changeStatus(target, true);
+                                //setValue
+                                me.value = target.data_index;
+                                me.onclick();
+                                me.msgBox.style.display = "none";
+
+
+                                var msgArr = me.splitString(me.msg[target.data_index]);
+                                var strong = document.createElement("strong");
+                                strong.innerHTML = target.data_index + 1 + "分";
+                                var text = document.createTextNode("(" + msgArr.content + ")");
+
+                                target.parentNode.appendChild(strong);
+                                target.parentNode.appendChild(text);
+
+                            }
+                        }
+                    });
+        }
+    }
+
+    s = new PingFen({
+        domId: "test",
+        msg: ["很不满意0|差得太离谱，与卖家描述的严重不符，非常不满", "不满意0|部分有破损，与卖家描述的不符，不满意", "一般0|质量一般，没有卖家描述的那么好", "满意0|质量不错，与卖家描述的基本一致，还是挺满意的", "非常满意0|质量非常好，与卖家描述的完全一致，非常满意"],
+        onclick: function () {
+            alert("谢谢评价");
+        }
+    });
+
+    ss = new PingFen({
+        domId: "test2",
+        msg: ["很不满意0|差得太离谱，与卖家描述的严重不符，非常不满", "不满意0|部分有破损，与卖家描述的不符，不满意", "一般0|质量一般，没有卖家描述的那么好", "满意0|质量不错，与卖家描述的基本一致，还是挺满意的", "非常满意0|质量非常好，与卖家描述的完全一致，非常满意"],
+        onclick: function () {
+            alert("谢谢评价");
+        }
+    });
+
+</script>
+</body>
+</html>
